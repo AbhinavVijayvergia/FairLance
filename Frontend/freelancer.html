@@ -1,0 +1,466 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FairLance — Freelancer Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #080d1a; --surface: #0f172a; --card: #131f35;
+    --blue: #3b82f6; --blue-glow: #3b82f640; --cyan: #06b6d4;
+    --white: #f0f6ff; --muted: #64748b; --border: #1e2d45;
+    --green: #10b981; --yellow: #f59e0b; --red: #ef4444;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background: var(--bg); color: var(--white); font-family: 'DM Sans', sans-serif; }
+
+  nav {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.5rem 4rem; border-bottom:1px solid var(--border);
+    background:#080d1aee; backdrop-filter:blur(12px);
+    position:sticky; top:0; z-index:100;
+  }
+  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; text-decoration:none; color:var(--white); }
+  .logo span { color:var(--blue); }
+  nav a { color:var(--muted); text-decoration:none; font-size:0.9rem; margin-left:2rem; transition:color 0.2s; }
+  nav a:hover { color:var(--white); }
+
+  .page-header { padding:3rem 4rem 2rem; border-bottom:1px solid var(--border); background:var(--surface); }
+  .page-header p { color:var(--blue); font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem; }
+  .page-header h1 { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.02em; }
+
+  .freelancer-info {
+    display:flex; align-items:center; gap:1rem; margin-top:1rem;
+  }
+  .avatar {
+    width:44px; height:44px; border-radius:50%;
+    background:linear-gradient(135deg, var(--blue), var(--cyan));
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:1rem;
+  }
+  .freelancer-info h3 { font-size:1rem; font-weight:600; }
+  .freelancer-info span { color:var(--muted); font-size:0.85rem; }
+  .pfi-chip {
+    margin-left:auto;
+    background:var(--blue-glow);
+    border:1px solid #3b82f660;
+    color:var(--blue);
+    padding:0.3rem 0.8rem;
+    border-radius:999px;
+    font-size:0.82rem;
+    font-weight:600;
+  }
+
+  .main { max-width:900px; margin:0 auto; padding:3rem 4rem; }
+
+  .section-title {
+    font-family:'Syne',sans-serif;
+    font-size:1.1rem; font-weight:700;
+    margin-bottom:1.5rem;
+    display:flex; align-items:center; gap:0.75rem;
+  }
+  .section-title .count {
+    background:var(--blue-glow);
+    color:var(--blue);
+    width:24px; height:24px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.75rem;
+  }
+
+  .milestone-card {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    margin-bottom:1.5rem;
+    overflow:hidden;
+    transition:border-color 0.2s;
+  }
+  .milestone-card:hover { border-color:#3b82f640; }
+
+  .milestone-top {
+    padding:1.5rem;
+    border-bottom:1px solid var(--border);
+    display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
+  }
+  .milestone-top h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:0.4rem; }
+  .milestone-top p { color:var(--muted); font-size:0.87rem; line-height:1.6; }
+
+  .milestone-stats {
+    display:flex; gap:0; border-bottom:1px solid var(--border);
+  }
+  .stat-box {
+    flex:1; padding:1rem 1.5rem;
+    border-right:1px solid var(--border);
+    text-align:center;
+  }
+  .stat-box:last-child { border-right:none; }
+  .stat-box .val { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; color:var(--blue); }
+  .stat-box .lbl { color:var(--muted); font-size:0.75rem; margin-top:0.2rem; }
+
+  .milestone-body { padding:1.5rem; }
+  .criteria-box {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:1rem 1.2rem;
+    margin-bottom:1.2rem;
+    font-size:0.87rem;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .criteria-box strong { color:var(--white); display:block; margin-bottom:0.3rem; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em; }
+
+  label { display:block; font-size:0.85rem; color:var(--muted); margin-bottom:0.5rem; }
+  textarea {
+    width:100%; background:var(--surface); border:1px solid var(--border);
+    color:var(--white); padding:0.85rem 1rem; border-radius:10px;
+    font-family:'DM Sans',sans-serif; font-size:0.92rem;
+    transition:border-color 0.2s; outline:none; resize:vertical; min-height:100px;
+  }
+  textarea:focus { border-color:var(--blue); }
+
+  .submit-row { display:flex; gap:1rem; margin-top:1rem; align-items:center; }
+  .btn-submit {
+    background:var(--blue); color:white; border:none;
+    padding:0.75rem 1.5rem; border-radius:10px;
+    font-size:0.9rem; font-weight:500; cursor:pointer;
+    font-family:'DM Sans',sans-serif; transition:all 0.2s;
+    display:flex; align-items:center; gap:0.5rem;
+    box-shadow:0 0 20px #3b82f640;
+  }
+  .btn-submit:hover { background:#2563eb; transform:translateY(-1px); }
+  .btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+  .spinner {
+    width:16px; height:16px; border:2px solid white;
+    border-top-color:transparent; border-radius:50%;
+    animation:spin 0.7s linear infinite; display:none;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* VERDICT CARD */
+  .verdict-card {
+    border-radius:12px; padding:1.5rem;
+    margin-top:1rem; border:1px solid;
+    animation:fadeUp 0.4s ease;
+    display:none;
+  }
+  .verdict-completed { background:#0a1f15; border-color:var(--green); }
+  .verdict-partial { background:#1a150a; border-color:var(--yellow); }
+  .verdict-failed { background:#1a0a0a; border-color:var(--red); }
+
+  .verdict-header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+  .verdict-badge {
+    padding:0.4rem 1rem; border-radius:999px;
+    font-weight:700; font-size:0.9rem; letter-spacing:0.05em;
+  }
+  .badge-completed { background:#10b98120; color:var(--green); }
+  .badge-partial { background:#f59e0b20; color:var(--yellow); }
+  .badge-failed { background:#ef444420; color:var(--red); }
+
+  .score-display {
+    font-family:'Syne',sans-serif; font-size:2rem; font-weight:800;
+  }
+  .score-completed { color:var(--green); }
+  .score-partial { color:var(--yellow); }
+  .score-failed { color:var(--red); }
+
+  .verdict-feedback { color:var(--muted); font-size:0.9rem; line-height:1.7; margin-bottom:1rem; }
+  .payment-status {
+    display:flex; align-items:center; gap:0.5rem;
+    font-size:0.9rem; font-weight:500;
+  }
+  .payment-released { color:var(--green); }
+  .payment-held { color:var(--yellow); }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(10px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  @media (max-width:768px) {
+    nav, .page-header, .main { padding-left:1.5rem; padding-right:1.5rem; }
+    .milestone-stats { flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Fair<span>Lance</span></a>
+  <div>
+    <a href="login.html">Log In</a>
+    <a href="employer.html">Post Project</a>
+    <a href="freelancer.html" style="color:var(--white)">Freelancer</a>
+    <a href="profile.html">PFI Score</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <p>Freelancer Dashboard</p>
+  <h1>Available Projects & Milestones</h1>
+  <div class="freelancer-info" id="freelancerInfo">
+    <div class="avatar" id="freelancerAvatar">FR</div>
+    <div>
+      <h3 id="freelancerName">Freelancer</h3>
+      <span id="freelancerId">You are viewing public projects</span>
+    </div>
+    <div class="pfi-chip" id="freelancerRoleChip">Role: Freelancer</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="section-title">
+    Available Projects
+    <div class="count" id="projectCount">0</div>
+  </div>
+
+  <div id="projectsContainer"></div>
+
+  <div class="section-title" style="margin-top:2rem;">
+    Selected Project Milestones
+    <div class="count" id="milestoneCount">0</div>
+  </div>
+
+  <div id="milestonesContainer"></div>
+
+</div>
+
+<script>
+  const API = 'http://127.0.0.1:8000';
+
+  let projects = [];
+  const projectBudgetMap = {};
+
+  function hydrateFreelancerFromLogin() {
+    try {
+      const raw = localStorage.getItem('fairlance_user');
+      if (!raw) return;
+      const user = JSON.parse(raw);
+      if (user.role !== 'freelancer') return;
+
+      const initials = (user.name || 'FR')
+        .split(' ')
+        .map(p => p[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase();
+
+      document.getElementById('freelancerAvatar').textContent = initials;
+      document.getElementById('freelancerName').textContent = user.name || 'Freelancer';
+      document.getElementById('freelancerId').textContent = user.id ? `Freelancer ID: ${user.id}` : 'Logged in as freelancer';
+      document.getElementById('freelancerRoleChip').textContent = 'Role: Freelancer';
+    } catch (e) {
+      console.warn('Could not hydrate freelancer from login', e);
+    }
+  }
+
+  async function loadProjects() {
+    try {
+      const res = await fetch(`${API}/projects`);
+      projects = await res.json();
+      renderProjects();
+    } catch (err) {
+      console.warn('Could not load projects', err);
+    }
+  }
+
+  function renderProjects() {
+    const container = document.getElementById('projectsContainer');
+    container.innerHTML = '';
+
+    if (!projects.length) {
+      container.innerHTML = `<p style="color:var(--muted);font-size:0.9rem;">No projects posted yet. Ask an employer to create one from the Post Project page.</p>`;
+      document.getElementById('projectCount').textContent = '0';
+      return;
+    }
+
+    document.getElementById('projectCount').textContent = projects.length;
+
+    projects.forEach(p => {
+      projectBudgetMap[p.id] = p.budget;
+      const card = document.createElement('div');
+      card.className = 'milestone-card';
+      card.innerHTML = `
+        <div class="milestone-top">
+          <div>
+            <h3>${p.title}</h3>
+            <p>${p.description}</p>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.25rem;">Budget</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--blue);">$${p.budget.toLocaleString()}</div>
+          </div>
+        </div>
+        <div class="milestone-body">
+          <button class="btn-submit" onclick="selectProject(${p.id})">
+            View Milestones →
+          </button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  async function selectProject(projectId) {
+    try {
+      const res = await fetch(`${API}/projects/${projectId}/milestones`);
+      const milestones = await res.json();
+      renderMilestones(projectId, milestones);
+    } catch (err) {
+      console.warn('Could not load milestones', err);
+    }
+  }
+
+  function renderMilestones(projectId, milestones) {
+    const container = document.getElementById('milestonesContainer');
+    container.innerHTML = '';
+
+    if (!milestones.length) {
+      container.innerHTML = `<p style="color:var(--muted);font-size:0.9rem;">No milestones found for this project. Ask the employer to regenerate milestones.</p>`;
+      document.getElementById('milestoneCount').textContent = '0';
+      return;
+    }
+
+    document.getElementById('milestoneCount').textContent = milestones.length;
+    const budget = projectBudgetMap[projectId] || 0;
+
+    milestones.forEach((m, idx) => {
+      const payment = budget && m.payment_percentage
+        ? (budget * m.payment_percentage / 100).toFixed(2)
+        : null;
+      const card = document.createElement('div');
+      card.className = 'milestone-card';
+      card.innerHTML = `
+        <div class="milestone-top">
+          <div>
+            <h3>Milestone ${m.milestone_id}: ${m.title}</h3>
+            <p>${m.description || ''}</p>
+          </div>
+          <div style="background:#f59e0b20;color:var(--yellow);padding:0.3rem 0.8rem;border-radius:999px;font-size:0.78rem;font-weight:600;white-space:nowrap;">
+            Active
+          </div>
+        </div>
+        <div class="milestone-stats">
+          <div class="stat-box"><div class="val">Day ${m.deadline_days}</div><div class="lbl">Deadline</div></div>
+          <div class="stat-box"><div class="val">${payment ? '$' + payment : '—'}</div><div class="lbl">Payment</div></div>
+          <div class="stat-box"><div class="val">${m.payment_percentage || 0}%</div><div class="lbl">Of Project</div></div>
+          <div class="stat-box"><div class="val">${projectId}</div><div class="lbl">Project ID</div></div>
+        </div>
+        <div class="milestone-body">
+          <div class="criteria-box">
+            <strong>Completion Criteria</strong>
+            ${m.completion_criteria}
+          </div>
+          <label>Describe your completed work or paste a link</label>
+          <textarea id="work-${projectId}-${m.milestone_id}" placeholder="Explain what you did, share links or repos, and how it meets the completion criteria..."></textarea>
+          <div class="submit-row">
+            <button class="btn-submit" id="btn-${projectId}-${m.milestone_id}" onclick="submitWork(${projectId}, ${m.milestone_id}, ${payment || 0})">
+              <div class="spinner" id="spin-${projectId}-${m.milestone_id}"></div>
+              <span id="btnText-${projectId}-${m.milestone_id}">Submit for AI Evaluation →</span>
+            </button>
+            <span style="color:var(--muted);font-size:0.82rem;">AI will evaluate in seconds</span>
+          </div>
+          <div class="verdict-card" id="verdict-${projectId}-${m.milestone_id}"></div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  async function submitWork(projectId, milestoneId, paymentAmount) {
+    const workFieldId = `work-${projectId}-${milestoneId}`;
+    const btnId = `btn-${projectId}-${milestoneId}`;
+    const spinId = `spin-${projectId}-${milestoneId}`;
+    const btnTextId = `btnText-${projectId}-${milestoneId}`;
+
+    const work = document.getElementById(workFieldId).value.trim();
+    if (!work) { alert('Please describe your completed work first.'); return; }
+
+    document.getElementById(spinId).style.display = 'block';
+    document.getElementById(btnTextId).textContent = 'AI Evaluating...';
+    document.getElementById(btnId).disabled = true;
+
+    try {
+      const res = await fetch(`${API}/verify/work`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          project_id: projectId,
+          milestone_id: milestoneId,
+          link: work
+        })
+      });
+      const data = await res.json();
+      displayVerdict(projectId, milestoneId, paymentAmount, {
+        verdict: data.status,
+        score: Math.round((data.quality_score || 0.75) * 100),
+        feedback: data.feedback || "Work has been evaluated by AI.",
+        release_payment: data.payment_released,
+        partial_payment_percentage: data.partial_payment_percentage || 0
+      });
+    } catch(err) {
+      console.warn('Backend not reachable, using demo evaluation:', err);
+      const score = Math.floor(Math.random() * 40) + 50;
+      const verdict = score >= 80 ? 'completed' : score >= 40 ? 'partial' : 'failed';
+      displayVerdict(projectId, milestoneId, paymentAmount, {
+        verdict,
+        score,
+        feedback: verdict === 'completed'
+          ? "Excellent work! All criteria have been met. Payment will be released immediately."
+          : verdict === 'partial'
+          ? "Good progress, but some requirements are still missing. Please address the feedback and resubmit."
+          : "The submission does not meet the required criteria. Please resubmit with all required deliverables.",
+        release_payment: verdict === 'completed',
+        partial_payment_percentage: verdict === 'partial' ? 60 : 0
+      });
+    }
+
+    document.getElementById(spinId).style.display = 'none';
+    document.getElementById(btnTextId).textContent = 'Resubmit for Evaluation →';
+    document.getElementById(btnId).disabled = false;
+  }
+
+  function displayVerdict(projectId, milestoneId, paymentAmount, data) {
+    const cardId = `verdict-${projectId}-${milestoneId}`;
+    const card = document.getElementById(cardId);
+
+    const verdictClass = `verdict-${data.verdict}`;
+    const badgeClass = `badge-${data.verdict}`;
+    const scoreClass = `score-${data.verdict}`;
+    const label = (data.verdict || '').toUpperCase();
+    const icon = data.verdict === 'completed' ? '✅' : data.verdict === 'partial' ? '⚠️' : '❌';
+
+    const payment = paymentAmount || 0;
+    const paymentHtml = data.release_payment
+      ? `<div class="payment-status payment-released">💰 $${payment.toFixed ? payment.toFixed(2) : payment} payment released to your wallet</div>`
+      : data.verdict === 'partial'
+      ? (() => {
+          const partial = Math.round(payment * data.partial_payment_percentage / 100);
+          const held = payment - partial;
+          return `<div class="payment-status payment-held">⏳ $${partial.toFixed ? partial.toFixed(2) : partial} partial payment pending review · $${held.toFixed ? held.toFixed(2) : held} held in escrow</div>`;
+        })()
+      : `<div class="payment-status" style="color:var(--red)">🔒 Payment held in escrow · Resubmit to unlock</div>`;
+
+    card.className = `verdict-card ${verdictClass}`;
+    card.style.display = 'block';
+    card.innerHTML = `
+      <div class="verdict-header">
+        <div class="verdict-badge ${badgeClass}">${icon} ${label}</div>
+        <div class="score-display ${scoreClass}">${data.score}<span style="font-size:1rem;opacity:0.6">/100</span></div>
+      </div>
+      <div class="verdict-feedback">${data.feedback}</div>
+      ${paymentHtml}
+    `;
+  }
+
+  window.onload = () => {
+    hydrateFreelancerFromLogin();
+    loadProjects();
+  };
+</script>
+
+</body>
+</html>
