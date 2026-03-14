@@ -172,7 +172,7 @@ class ProjectResponse(Project):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Submission(BaseModel):
@@ -204,7 +204,6 @@ def create_project(project: Project, db: Session = Depends(get_db)):
             "budget": db_project.budget,
         },
     }
-
 
 @app.post("/project/create-with-milestones")
 def create_project_with_milestones(project: Project, db: Session = Depends(get_db)):
@@ -250,7 +249,6 @@ def create_project_with_milestones(project: Project, db: Session = Depends(get_d
         },
         "milestones": milestones_payload,
     }
-
 
 @app.post("/project/create-from-milestones")
 def create_project_from_milestones(payload: dict, db: Session = Depends(get_db)):

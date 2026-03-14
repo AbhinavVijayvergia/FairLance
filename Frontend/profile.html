@@ -3,164 +3,230 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FairLance — Freelancer PFI Profile</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<title>FairLance — PFI Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg:#080d1a; --surface:#0f172a; --card:#131f35;
-    --blue:#3b82f6; --blue-glow:#3b82f640; --cyan:#06b6d4;
-    --white:#f0f6ff; --muted:#64748b; --border:#1e2d45;
-    --green:#10b981; --yellow:#f59e0b; --red:#ef4444;
+    --bg:#080d1a; --surface:#0c1525; --card:#101c30;
+    --card2:#0f1a2e; --blue:#3b82f6; --blue-glow:#3b82f625;
+    --cyan:#06b6d4; --white:#eef4ff; --muted:#4e6480;
+    --border:#162035; --green:#10b981; --yellow:#f59e0b; --red:#ef4444;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--white); font-family:'DM Sans',sans-serif; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
 
-  nav {
-    display:flex; justify-content:space-between; align-items:center;
-    padding:1.5rem 4rem; border-bottom:1px solid var(--border);
-    background:#080d1aee; backdrop-filter:blur(12px);
-    position:sticky; top:0; z-index:100;
-  }
-  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; text-decoration:none; color:var(--white); }
-  .logo span { color:var(--blue); }
-  nav a { color:var(--muted); text-decoration:none; font-size:0.9rem; margin-left:2rem; transition:color 0.2s; }
-  nav a:hover { color:var(--white); }
+  /* ── NAV ── */
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;border-bottom:1px solid var(--border);background:#080d1af5;backdrop-filter:blur(20px);position:sticky;top:0;z-index:200;}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;text-decoration:none;color:var(--white);letter-spacing:-0.02em;}
+  .logo span{color:var(--blue);}
+  .nav-links{display:flex;gap:0.2rem;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;padding:0.4rem 0.9rem;border-radius:8px;transition:all 0.2s;}
+  .nav-links a:hover{color:var(--white);background:#ffffff08;}
+  .nav-links a.active{color:var(--blue);background:var(--blue-glow);}
 
-  .main { max-width:1000px; margin:0 auto; padding:3rem 4rem; }
-
-  /* PROFILE HEADER */
-  .profile-header {
-    display:grid; grid-template-columns:auto 1fr auto;
-    gap:2rem; align-items:center;
-    background:var(--card); border:1px solid var(--border);
-    border-radius:20px; padding:2rem 2.5rem; margin-bottom:2rem;
-  }
-  .avatar-large {
-    width:72px; height:72px; border-radius:50%;
-    background:linear-gradient(135deg, var(--blue), var(--cyan));
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem;
-    box-shadow:0 0 30px #3b82f640;
-  }
-  .profile-info h2 { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; margin-bottom:0.3rem; }
-  .profile-info p { color:var(--muted); font-size:0.9rem; }
-  .profile-tags { display:flex; gap:0.5rem; margin-top:0.75rem; flex-wrap:wrap; }
-  .tag {
-    background:var(--surface); border:1px solid var(--border);
-    padding:0.2rem 0.7rem; border-radius:999px;
-    font-size:0.78rem; color:var(--muted);
-  }
-
-  /* PFI GAUGE */
-  .pfi-gauge-wrap { text-align:center; }
-  .gauge-container {
-    position:relative; width:160px; height:160px; margin:0 auto;
-  }
-  .gauge-svg { transform:rotate(-90deg); }
-  .gauge-bg { fill:none; stroke:var(--border); stroke-width:12; }
-  .gauge-fill { fill:none; stroke-width:12; stroke-linecap:round; transition:stroke-dashoffset 1.5s ease; }
-  .gauge-text {
-    position:absolute; top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
-  }
-  .gauge-score { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; }
-  .gauge-label { color:var(--muted); font-size:0.75rem; margin-top:-4px; }
-  .grade-badge {
-    display:inline-block; margin-top:0.75rem;
-    padding:0.3rem 1.2rem; border-radius:999px;
-    font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem;
-  }
-
-  /* RECOMMENDATION */
-  .recommendation {
-    display:flex; align-items:center; gap:0.75rem;
-    padding:0.5rem 1.2rem; border-radius:999px;
-    font-weight:700; font-size:0.85rem;
-    width:fit-content; margin:0.5rem auto 0;
-  }
-
-  /* GRID */
-  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
-  .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
-
-  .card {
-    background:var(--card); border:1px solid var(--border);
-    border-radius:16px; padding:1.5rem;
-  }
-  .card-title {
-    font-family:'Syne',sans-serif; font-weight:700;
-    font-size:0.9rem; margin-bottom:1.25rem;
-    color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;
-  }
-
-  /* BREAKDOWN BARS */
-  .breakdown-item { margin-bottom:1.25rem; }
-  .breakdown-item:last-child { margin-bottom:0; }
-  .breakdown-header { display:flex; justify-content:space-between; margin-bottom:0.5rem; }
-  .breakdown-label { font-size:0.88rem; }
-  .breakdown-val { font-family:'Syne',sans-serif; font-weight:700; font-size:0.9rem; }
-  .bar-track {
-    height:8px; background:var(--surface);
-    border-radius:999px; overflow:hidden;
-  }
-  .bar-fill {
-    height:100%; border-radius:999px;
-    transition:width 1.2s ease;
-    width:0%;
-  }
-
-  /* STAT BOXES */
-  .stat-card { text-align:center; }
-  .stat-card .num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; }
-  .stat-card .lbl { color:var(--muted); font-size:0.8rem; margin-top:0.2rem; }
-
-  /* HISTORY TABLE */
-  .history-table { width:100%; border-collapse:collapse; }
-  .history-table th {
-    text-align:left; padding:0.6rem 1rem;
-    color:var(--muted); font-size:0.78rem;
-    text-transform:uppercase; letter-spacing:0.08em;
+  /* ── HERO BAND ── */
+  .hero-band{
+    background:var(--surface);
     border-bottom:1px solid var(--border);
+    padding:2.5rem 4rem;
+    position:relative;overflow:hidden;
   }
-  .history-table td { padding:0.85rem 1rem; font-size:0.88rem; border-bottom:1px solid var(--border); }
-  .history-table tr:last-child td { border-bottom:none; }
-  .history-table tr:hover td { background:#ffffff05; }
-
-  .pill {
-    padding:0.2rem 0.7rem; border-radius:999px;
-    font-size:0.75rem; font-weight:600;
-    display:inline-block;
+  .hero-band::before{
+    content:'';position:absolute;
+    right:-100px;top:-100px;
+    width:500px;height:500px;
+    background:radial-gradient(circle,#3b82f60a 0%,transparent 65%);
+    pointer-events:none;
   }
-  .pill-completed { background:#10b98120; color:var(--green); }
-  .pill-partial { background:#f59e0b20; color:var(--yellow); }
-  .pill-failed { background:#ef444420; color:var(--red); }
-
-  .deadline-yes { color:var(--green); }
-  .deadline-no { color:var(--red); }
-
-  /* LOAD BUTTON */
-  .load-row { display:flex; gap:1rem; margin-bottom:2rem; align-items:center; }
-  input[type="text"] {
-    background:var(--card); border:1px solid var(--border);
-    color:var(--white); padding:0.75rem 1rem; border-radius:10px;
-    font-family:'DM Sans',sans-serif; font-size:0.9rem;
-    outline:none; flex:1; transition:border-color 0.2s;
+  .hero-band::after{
+    content:'PFI';
+    position:absolute;right:3rem;bottom:-1.5rem;
+    font-family:'Syne',sans-serif;font-weight:800;font-size:9rem;
+    color:#ffffff04;line-height:1;pointer-events:none;
+    letter-spacing:-0.05em;
   }
-  input[type="text"]:focus { border-color:var(--blue); }
-  .btn-load {
-    background:var(--blue); color:white; border:none;
-    padding:0.75rem 1.5rem; border-radius:10px;
-    font-size:0.9rem; font-weight:500; cursor:pointer;
-    font-family:'DM Sans',sans-serif; transition:all 0.2s;
-    white-space:nowrap;
-  }
-  .btn-load:hover { background:#2563eb; }
+  .band-label{color:var(--blue);font-size:0.72rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.5rem;}
+  .band-title{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;letter-spacing:-0.03em;}
 
-  @media (max-width:768px) {
-    nav, .main { padding-left:1.5rem; padding-right:1.5rem; }
-    .profile-header { grid-template-columns:1fr; text-align:center; }
-    .grid-2, .grid-3 { grid-template-columns:1fr; }
+  /* ── SEARCH BAR ── */
+  .search-wrap{display:flex;gap:0.75rem;margin-top:1.75rem;max-width:520px;}
+  .search-input{
+    flex:1;background:var(--card);border:1px solid var(--border);
+    color:var(--white);padding:0.8rem 1.1rem;border-radius:12px;
+    font-family:'DM Sans',sans-serif;font-size:0.9rem;
+    outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+  }
+  .search-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #3b82f615;}
+  .search-btn{
+    background:var(--blue);color:white;border:none;
+    padding:0.8rem 1.6rem;border-radius:12px;
+    font-size:0.88rem;font-weight:600;cursor:pointer;
+    font-family:'DM Sans',sans-serif;transition:all 0.2s;
+    white-space:nowrap;box-shadow:0 0 24px #3b82f640;
+  }
+  .search-btn:hover{background:#2563eb;transform:translateY(-1px);}
+
+  /* ── MAIN LAYOUT ── */
+  .page{max-width:1100px;margin:0 auto;padding:2.5rem 4rem;}
+
+  /* ── IDENTITY CARD ── */
+  .identity-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:20px;padding:0;
+    margin-bottom:1.5rem;
+    overflow:hidden;
+    display:grid;grid-template-columns:1fr auto;
+    animation:fadeUp 0.5s ease both;
+  }
+  .identity-left{padding:2rem 2.5rem;display:flex;align-items:center;gap:1.75rem;}
+  .avatar-ring{
+    position:relative;flex-shrink:0;
+    width:80px;height:80px;
+  }
+  .avatar-ring svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
+  .avatar-inner{
+    position:absolute;inset:6px;border-radius:50%;
+    background:linear-gradient(135deg,var(--blue),var(--cyan));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;
+  }
+  .identity-name{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.2rem;}
+  .identity-id{color:var(--muted);font-size:0.85rem;margin-bottom:0.75rem;}
+  .tag-row{display:flex;gap:0.5rem;flex-wrap:wrap;}
+  .tag{background:var(--surface);border:1px solid var(--border);padding:0.2rem 0.7rem;border-radius:999px;font-size:0.75rem;color:var(--muted);}
+
+  /* ── GAUGE PANEL ── */
+  .gauge-panel{
+    background:linear-gradient(135deg,#0a1628,#0d1e35);
+    border-left:1px solid var(--border);
+    padding:2rem 2.5rem;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:0.75rem;min-width:220px;
+  }
+  .gauge-wrap{position:relative;width:140px;height:140px;}
+  .gauge-wrap svg{transform:rotate(-90deg);}
+  .gauge-bg{fill:none;stroke:#162035;stroke-width:10;}
+  .gauge-fill{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1.6s cubic-bezier(0.4,0,0.2,1);}
+  .gauge-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .gauge-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1;}
+  .gauge-sub{font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+
+  .grade-pill{
+    font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;
+    padding:0.3rem 1.4rem;border-radius:999px;letter-spacing:0.05em;
+  }
+  .rec-badge{
+    padding:0.35rem 1rem;border-radius:999px;
+    font-size:0.75rem;font-weight:700;letter-spacing:0.04em;
+    display:flex;align-items:center;gap:0.4rem;
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1rem;margin-bottom:1.5rem;
+  }
+  .stat-tile{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:16px;padding:1.5rem;
+    text-align:center;position:relative;overflow:hidden;
+    animation:fadeUp 0.5s ease both;
+    transition:border-color 0.2s,transform 0.2s;
+  }
+  .stat-tile:hover{border-color:#3b82f640;transform:translateY(-2px);}
+  .stat-tile::before{
+    content:'';position:absolute;
+    bottom:0;left:0;right:0;height:2px;
+    opacity:0;transition:opacity 0.3s;
+  }
+  .stat-tile:hover::before{opacity:1;}
+  .tile-blue::before{background:linear-gradient(90deg,var(--blue),var(--cyan));}
+  .tile-green::before{background:linear-gradient(90deg,var(--green),#34d399);}
+  .tile-yellow::before{background:linear-gradient(90deg,var(--yellow),#fbbf24);}
+  .stat-num{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;line-height:1;margin-bottom:0.3rem;}
+  .stat-lbl{color:var(--muted);font-size:0.78rem;}
+
+  /* ── BOTTOM GRID ── */
+  .bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+
+  .panel{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:16px;padding:1.5rem;
+    animation:fadeUp 0.5s ease both;
+  }
+  .panel-title{
+    font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;
+    color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;
+    margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem;
+  }
+  .panel-title::before{content:'';width:3px;height:12px;border-radius:2px;background:var(--blue);}
+
+  /* ── BREAKDOWN BARS ── */
+  .bar-item{margin-bottom:1.3rem;}
+  .bar-item:last-child{margin-bottom:0;}
+  .bar-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.45rem;}
+  .bar-label{font-size:0.85rem;}
+  .bar-val{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;}
+  .bar-track{height:6px;background:var(--surface);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:999px;transition:width 1.3s cubic-bezier(0.4,0,0.2,1);width:0%;}
+
+  /* ── FORMULA ── */
+  .formula-box{
+    margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);
+    font-size:0.8rem;color:var(--muted);line-height:2;
+  }
+  .formula-box span{color:var(--blue);font-weight:600;}
+
+  /* ── SUMMARY ── */
+  .summary-text{color:#7a93b0;font-size:0.88rem;line-height:1.8;}
+
+  /* ── HISTORY TABLE ── */
+  .history-panel{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+    animation:fadeUp 0.5s 0.1s ease both;
+  }
+  .history-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .history-title{font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;display:flex;align-items:center;gap:0.5rem;}
+  .history-title::before{content:'';width:3px;height:12px;border-radius:2px;background:var(--blue);}
+  .history-count{background:var(--blue-glow);color:var(--blue);padding:0.15rem 0.6rem;border-radius:999px;font-size:0.72rem;font-weight:600;}
+
+  table{width:100%;border-collapse:collapse;}
+  thead th{
+    padding:0.7rem 1.5rem;text-align:left;
+    font-size:0.72rem;color:var(--muted);
+    text-transform:uppercase;letter-spacing:0.1em;
+    background:var(--surface);border-bottom:1px solid var(--border);
+  }
+  tbody td{padding:1rem 1.5rem;font-size:0.87rem;border-bottom:1px solid var(--border);}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr{transition:background 0.15s;}
+  tbody tr:hover td{background:#ffffff03;}
+
+  .score-bar-wrap{display:flex;align-items:center;gap:0.75rem;}
+  .score-mini-track{flex:1;height:4px;background:var(--surface);border-radius:999px;overflow:hidden;max-width:80px;}
+  .score-mini-fill{height:100%;border-radius:999px;}
+  .score-num{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;min-width:32px;}
+
+  .pill{padding:0.2rem 0.65rem;border-radius:999px;font-size:0.72rem;font-weight:600;display:inline-block;}
+  .pill-completed{background:#10b98118;color:var(--green);}
+  .pill-partial{background:#f59e0b18;color:var(--yellow);}
+  .pill-failed{background:#ef444418;color:var(--red);}
+  .dl-yes{color:var(--green);}
+  .dl-no{color:var(--red);}
+
+  /* ── EMPTY / LOADING ── */
+  .center-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem;gap:0.75rem;color:var(--muted);font-size:0.88rem;}
+  .loading-ring{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+  @media(max-width:900px){
+    nav,.hero-band,.page{padding-left:1.5rem;padding-right:1.5rem;}
+    .identity-card{grid-template-columns:1fr;}
+    .gauge-panel{border-left:none;border-top:1px solid var(--border);}
+    .stats-row,.bottom-grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -168,131 +234,136 @@
 
 <nav>
   <a href="index.html" class="logo">Fair<span>Lance</span></a>
-  <div>
+  <div class="nav-links">
     <a href="employer.html">Post Project</a>
     <a href="freelancer.html">Freelancer</a>
-    <a href="profile.html" style="color:var(--white)">PFI Score</a>
+    <a href="profile.html" class="active">PFI Score</a>
   </div>
 </nav>
 
-<div class="main">
-
-  <div style="margin-bottom:2rem;">
-    <p style="color:var(--blue);font-size:0.8rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.5rem;">Professional Fidelity Index</p>
-    <h1 style="font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;letter-spacing:-0.02em;">Freelancer Profile</h1>
+<div class="hero-band">
+  <div class="band-label">Professional Fidelity Index</div>
+  <div class="band-title">Freelancer Trust Profile</div>
+  <div class="search-wrap">
+    <input class="search-input" type="text" id="idInput" placeholder="Enter Freelancer ID — e.g. FL001" value="FL001"/>
+    <button class="search-btn" onclick="loadProfile()">Load Profile →</button>
   </div>
+</div>
 
-  <div class="load-row">
-    <input type="text" id="freelancerIdInput" placeholder="Enter Freelancer ID (e.g. FL001)" value="FL001"/>
-    <button class="btn-load" onclick="loadProfile()">Load PFI Profile →</button>
-  </div>
+<div class="page">
 
-  <!-- PROFILE HEADER -->
-  <div class="profile-header" id="profileHeader">
-    <div class="avatar-large" id="avatarText">AJ</div>
-    <div class="profile-info">
-      <h2 id="profileName">Alex Johnson</h2>
-      <p id="profileId">Freelancer ID: FL001</p>
-      <div class="profile-tags">
-        <span class="tag">Web Development</span>
-        <span class="tag">UI Design</span>
-        <span class="tag">React</span>
-      </div>
-    </div>
-    <div class="pfi-gauge-wrap">
-      <div class="gauge-container">
-        <svg class="gauge-svg" width="160" height="160" viewBox="0 0 160 160">
-          <circle class="gauge-bg" cx="80" cy="80" r="64"/>
-          <circle class="gauge-fill" id="gaugeFill" cx="80" cy="80" r="64"
-            stroke="#3b82f6"
-            stroke-dasharray="402.12"
-            stroke-dashoffset="402.12"/>
+  <!-- IDENTITY -->
+  <div class="identity-card" id="identityCard">
+    <div class="identity-left">
+      <div class="avatar-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle class="gauge-bg" cx="40" cy="40" r="34" stroke-width="5"/>
+          <circle id="avatarRing" cx="40" cy="40" r="34"
+            fill="none" stroke="#3b82f6" stroke-width="5" stroke-linecap="round"
+            stroke-dasharray="213.63" stroke-dashoffset="213.63"
+            style="transition:stroke-dashoffset 1.6s cubic-bezier(0.4,0,0.2,1)"/>
         </svg>
-        <div class="gauge-text">
-          <div class="gauge-score" id="gaugeScore" style="color:var(--blue)">–</div>
-          <div class="gauge-label">PFI Score</div>
+        <div class="avatar-inner" id="avatarInitials">AJ</div>
+      </div>
+      <div>
+        <div class="identity-name" id="profileName">Alex Johnson</div>
+        <div class="identity-id" id="profileIdText">Freelancer ID: FL001</div>
+        <div class="tag-row">
+          <span class="tag">Web Development</span>
+          <span class="tag">UI Design</span>
+          <span class="tag">React</span>
         </div>
       </div>
-      <div class="grade-badge" id="gradeBadge" style="background:var(--blue-glow);color:var(--blue);">–</div>
-      <div class="recommendation" id="recBadge" style="background:var(--surface);color:var(--muted);">Loading...</div>
+    </div>
+
+    <div class="gauge-panel">
+      <div class="gauge-wrap">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle class="gauge-bg" cx="70" cy="70" r="56" stroke-width="10"/>
+          <circle class="gauge-fill" id="gaugeFill" cx="70" cy="70" r="56"
+            stroke="#3b82f6" stroke-dasharray="351.86" stroke-dashoffset="351.86"/>
+        </svg>
+        <div class="gauge-center">
+          <div class="gauge-num" id="gaugeNum" style="color:var(--blue)">–</div>
+          <div class="gauge-sub">PFI Score</div>
+        </div>
+      </div>
+      <div class="grade-pill" id="gradePill" style="background:var(--blue-glow);color:var(--blue);">Grade –</div>
+      <div class="rec-badge" id="recBadge" style="background:var(--surface);color:var(--muted);">Loading...</div>
     </div>
   </div>
 
-  <!-- STATS ROW -->
-  <div class="grid-3">
-    <div class="card stat-card">
-      <div class="num" id="statProjects" style="color:var(--blue)">–</div>
-      <div class="lbl">Total Projects</div>
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-tile tile-blue" style="animation-delay:0.05s">
+      <div class="stat-num" id="statProjects" style="color:var(--blue)">–</div>
+      <div class="stat-lbl">Total Projects</div>
     </div>
-    <div class="card stat-card">
-      <div class="num" id="statCompleted" style="color:var(--green)">–</div>
-      <div class="lbl">Milestones Completed</div>
+    <div class="stat-tile tile-green" style="animation-delay:0.1s">
+      <div class="stat-num" id="statCompleted" style="color:var(--green)">–</div>
+      <div class="stat-lbl">Milestones Completed</div>
     </div>
-    <div class="card stat-card">
-      <div class="num" id="statDeadlines" style="color:var(--yellow)">–</div>
-      <div class="lbl">Deadlines Met</div>
+    <div class="stat-tile tile-yellow" style="animation-delay:0.15s">
+      <div class="stat-num" id="statDeadlines" style="color:var(--yellow)">–</div>
+      <div class="stat-lbl">Deadlines Met</div>
     </div>
   </div>
 
   <!-- BREAKDOWN + SUMMARY -->
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">PFI Breakdown</div>
-      <div class="breakdown-item">
-        <div class="breakdown-header">
-          <span class="breakdown-label">Milestone Accuracy</span>
-          <span class="breakdown-val" id="bMilestone">–</span>
+  <div class="bottom-grid">
+    <div class="panel" style="animation-delay:0.1s">
+      <div class="panel-title">PFI Breakdown</div>
+      <div class="bar-item">
+        <div class="bar-row">
+          <span class="bar-label">Milestone Accuracy</span>
+          <span class="bar-val" id="bMilestone">–</span>
         </div>
-        <div class="bar-track"><div class="bar-fill" id="barMilestone" style="background:var(--blue)"></div></div>
+        <div class="bar-track"><div class="bar-fill" id="barMilestone" style="background:linear-gradient(90deg,var(--blue),var(--cyan))"></div></div>
       </div>
-      <div class="breakdown-item">
-        <div class="breakdown-header">
-          <span class="breakdown-label">Deadline Adherence</span>
-          <span class="breakdown-val" id="bDeadline">–</span>
+      <div class="bar-item">
+        <div class="bar-row">
+          <span class="bar-label">Deadline Adherence</span>
+          <span class="bar-val" id="bDeadline">–</span>
         </div>
-        <div class="bar-track"><div class="bar-fill" id="barDeadline" style="background:var(--cyan)"></div></div>
+        <div class="bar-track"><div class="bar-fill" id="barDeadline" style="background:linear-gradient(90deg,var(--cyan),#67e8f9)"></div></div>
       </div>
-      <div class="breakdown-item">
-        <div class="breakdown-header">
-          <span class="breakdown-label">Work Quality</span>
-          <span class="breakdown-val" id="bQuality">–</span>
+      <div class="bar-item">
+        <div class="bar-row">
+          <span class="bar-label">Work Quality</span>
+          <span class="bar-val" id="bQuality">–</span>
         </div>
-        <div class="bar-track"><div class="bar-fill" id="barQuality" style="background:var(--green)"></div></div>
+        <div class="bar-track"><div class="bar-fill" id="barQuality" style="background:linear-gradient(90deg,var(--green),#34d399)"></div></div>
+      </div>
+      <div class="formula-box">
+        PFI = (<span>Accuracy</span> × 0.4) + (<span>Deadline</span> × 0.3) + (<span>Quality</span> × 0.3)
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title">AI Summary</div>
-      <p id="pfiSummary" style="color:var(--muted);font-size:0.9rem;line-height:1.7;">
-        Load a freelancer profile to see their AI-generated performance summary.
-      </p>
-      <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
-        <div class="card-title" style="margin-bottom:0.75rem;">Score Formula</div>
-        <div style="font-size:0.82rem;color:var(--muted);line-height:1.8;">
-          PFI = (Milestone Accuracy × 0.4)<br/>
-          + (Deadline Adherence × 0.3)<br/>
-          + (Work Quality × 0.3)
+    <div class="panel" style="animation-delay:0.15s">
+      <div class="panel-title">AI Summary</div>
+      <p class="summary-text" id="pfiSummary">Load a freelancer profile to see their AI-generated performance analysis and trust assessment.</p>
+      <div id="trustMeter" style="margin-top:1.5rem;display:none;">
+        <div class="panel-title" style="margin-bottom:0.75rem;">Trust Meter</div>
+        <div style="position:relative;height:8px;background:var(--surface);border-radius:999px;overflow:hidden;">
+          <div id="trustBar" style="height:100%;border-radius:999px;transition:width 1.3s ease;width:0%;background:linear-gradient(90deg,var(--red),var(--yellow),var(--green));"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:0.4rem;">
+          <span style="font-size:0.68rem;color:var(--muted);">Low Trust</span>
+          <span style="font-size:0.68rem;color:var(--muted);">High Trust</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MILESTONE HISTORY -->
-  <div class="card">
-    <div class="card-title">Milestone History</div>
-    <table class="history-table">
-      <thead>
-        <tr>
-          <th>Milestone</th>
-          <th>Verdict</th>
-          <th>Score</th>
-          <th>Deadline Met</th>
-        </tr>
-      </thead>
-      <tbody id="historyBody">
-        <tr><td colspan="4" style="color:var(--muted);text-align:center;padding:2rem;">Load a profile to see history</td></tr>
-      </tbody>
-    </table>
+  <!-- HISTORY -->
+  <div class="history-panel">
+    <div class="history-head">
+      <div class="history-title">Milestone History</div>
+      <div class="history-count" id="historyCount">0 entries</div>
+    </div>
+    <div id="historyBody">
+      <div class="center-msg">Load a profile to see milestone history</div>
+    </div>
   </div>
 
 </div>
@@ -300,123 +371,162 @@
 <script>
   const API = 'http://127.0.0.1:8000';
 
-  const demoData = {
-    pfi_score: 73.4,
-    grade: 'C',
-    recommendation: 'caution',
-    breakdown: { milestone_accuracy: 71.43, deadline_adherence: 71.43, work_quality: 76.43 },
-    summary: "Alex Johnson has a mixed performance record, completing milestones and meeting deadlines about 71% of the time with reasonable work quality. Inconsistent performance and occasional failures raise concerns about reliability.",
-    history: [
-      { title:"Homepage Design",    verdict:"completed", score:92, met_deadline:true },
-      { title:"Backend API",        verdict:"completed", score:88, met_deadline:true },
-      { title:"Mobile UI",          verdict:"partial",   score:65, met_deadline:false },
-      { title:"Database Setup",     verdict:"completed", score:90, met_deadline:true },
-      { title:"Final Testing",      verdict:"failed",    score:30, met_deadline:false },
-      { title:"Landing Page",       verdict:"completed", score:85, met_deadline:true },
-      { title:"Payment Integration",verdict:"completed", score:78, met_deadline:true },
-    ],
-    total_projects: 5,
-    completed: 5,
-    deadlines_met: 5
+  const DEMO = {
+    pfi_score: 73.4, grade:'C', recommendation:'caution',
+    name:'Alex Johnson', total_projects:5,
+    breakdown:{ milestone_accuracy:71.43, deadline_adherence:71.43, work_quality:76.43 },
+    summary:"Alex Johnson delivers reasonable quality work but shows inconsistency in meeting deadlines and completing all milestone requirements. With a 71% completion rate and mixed deadline record, employers should monitor progress closely and set clear expectations before engagement.",
+    history:[
+      {title:"Homepage Design",     verdict:"completed", score:92, met_deadline:true},
+      {title:"Backend API",         verdict:"completed", score:88, met_deadline:true},
+      {title:"Mobile UI",           verdict:"partial",   score:65, met_deadline:false},
+      {title:"Database Setup",      verdict:"completed", score:90, met_deadline:true},
+      {title:"Final Testing",       verdict:"failed",    score:30, met_deadline:false},
+      {title:"Landing Page",        verdict:"completed", score:85, met_deadline:true},
+      {title:"Payment Integration", verdict:"completed", score:78, met_deadline:true},
+    ]
   };
 
   async function loadProfile() {
-    const id = document.getElementById('freelancerIdInput').value.trim();
-    if (!id) { alert('Enter a freelancer ID'); return; }
+    const id = document.getElementById('idInput').value.trim();
+    if (!id) { alert('Enter a Freelancer ID'); return; }
+
+    // Show loading state
+    document.getElementById('gaugeNum').textContent = '…';
+    document.getElementById('historyBody').innerHTML = '<div class="center-msg"><div class="loading-ring"></div><span>Fetching profile...</span></div>';
 
     try {
       const res = await fetch(`${API}/pfi/${id}`);
       const data = await res.json();
-      renderProfile(data, id);
+      render(data, id);
     } catch(err) {
-      console.warn('Backend not reachable, using demo data:', err);
-      renderProfile(demoData, id);
+      console.warn('Using demo data:', err);
+      render(DEMO, id);
     }
   }
 
-  function renderProfile(data, id) {
-    // Gauge
-    const score = parseFloat(data.pfi_score);
-    const circumference = 402.12;
-    const offset = circumference - (score / 100) * circumference;
+  function render(data, id) {
+    const score = parseFloat(data.pfi_score) || 0;
+
+    // ── Gauge ──
+    const circ = 351.86;
+    const offset = circ - (score / 100) * circ;
     const fill = document.getElementById('gaugeFill');
-    fill.style.strokeDashoffset = circumference;
-    setTimeout(() => { fill.style.strokeDashoffset = offset; }, 100);
+    fill.style.strokeDashoffset = circ;
+    setTimeout(() => { fill.style.strokeDashoffset = offset; }, 80);
 
-    // Score color
     const color = score >= 80 ? 'var(--green)' : score >= 65 ? 'var(--blue)' : score >= 50 ? 'var(--yellow)' : 'var(--red)';
-    fill.style.stroke = color;
-    document.getElementById('gaugeScore').textContent = score;
-    document.getElementById('gaugeScore').style.color = color;
+    const hexColor = score >= 80 ? '#10b981' : score >= 65 ? '#3b82f6' : score >= 50 ? '#f59e0b' : '#ef4444';
+    fill.style.stroke = hexColor;
+    document.getElementById('gaugeNum').textContent = score;
+    document.getElementById('gaugeNum').style.color = color;
 
-    // Grade
-    const grade = data.grade || '–';
-    const gradeBadge = document.getElementById('gradeBadge');
-    gradeBadge.textContent = `Grade ${grade}`;
-    gradeBadge.style.color = color;
-    gradeBadge.style.background = color.replace(')', '20)').replace('var(', 'var(');
+    // ── Avatar ring ──
+    const ringCirc = 213.63;
+    const ring = document.getElementById('avatarRing');
+    ring.style.stroke = hexColor;
+    ring.style.strokeDashoffset = ringCirc;
+    setTimeout(() => { ring.style.strokeDashoffset = ringCirc - (score / 100) * ringCirc; }, 100);
 
-    // Recommendation
+    // ── Grade ──
+    const gradePill = document.getElementById('gradePill');
+    gradePill.textContent = `Grade ${data.grade || '–'}`;
+    gradePill.style.color = color;
+    gradePill.style.background = hexColor + '20';
+
+    // ── Recommendation ──
     const rec = (data.recommendation || 'caution').toLowerCase();
-    const recBadge = document.getElementById('recBadge');
-    const recConfig = {
-      hire:    { icon:'✅', label:'RECOMMENDED TO HIRE', bg:'#10b98120', color:'var(--green)' },
-      caution: { icon:'⚠️', label:'PROCEED WITH CAUTION', bg:'#f59e0b20', color:'var(--yellow)' },
-      avoid:   { icon:'❌', label:'NOT RECOMMENDED',      bg:'#ef444420', color:'var(--red)' }
+    const recMap = {
+      hire:    { icon:'✅', label:'HIRE RECOMMENDED',    bg:'#10b98118', color:'var(--green)' },
+      caution: { icon:'⚠️', label:'PROCEED WITH CAUTION', bg:'#f59e0b18', color:'var(--yellow)' },
+      avoid:   { icon:'❌', label:'NOT RECOMMENDED',       bg:'#ef444418', color:'var(--red)' }
     };
-    const rc = recConfig[rec] || recConfig.caution;
+    const rc = recMap[rec] || recMap.caution;
+    const recBadge = document.getElementById('recBadge');
     recBadge.innerHTML = `${rc.icon} ${rc.label}`;
     recBadge.style.background = rc.bg;
     recBadge.style.color = rc.color;
 
-    // Name / ID
-    const initials = id.replace(/[^A-Z]/g,'').slice(0,2) || id.slice(0,2).toUpperCase();
-    document.getElementById('avatarText').textContent = initials;
+    // ── Identity ──
+    const initials = (data.name || id).split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase() || id.slice(0,2).toUpperCase();
+    document.getElementById('avatarInitials').textContent = initials;
     document.getElementById('profileName').textContent = data.name || `Freelancer ${id}`;
-    document.getElementById('profileId').textContent = `Freelancer ID: ${id}`;
+    document.getElementById('profileIdText').textContent = `Freelancer ID: ${id}`;
 
-    // Stats
+    // ── Stats ──
     const history = data.history || data.milestones || [];
     const completed = history.filter(m => m.verdict === 'completed').length;
     const deadlinesMet = history.filter(m => m.met_deadline).length;
-    document.getElementById('statProjects').textContent = data.total_projects || '–';
-    document.getElementById('statCompleted').textContent = completed;
-    document.getElementById('statDeadlines').textContent = deadlinesMet;
+    animateNum('statProjects', data.total_projects || 0);
+    animateNum('statCompleted', completed);
+    animateNum('statDeadlines', deadlinesMet);
 
-    // Breakdown bars
+    // ── Bars ──
     const bd = data.breakdown || {};
     setTimeout(() => {
-      setBar('milestone', bd.milestone_accuracy || 0);
-      setBar('deadline',  bd.deadline_adherence || 0);
-      setBar('quality',   bd.work_quality || 0);
-    }, 200);
+      setBar('Milestone', bd.milestone_accuracy || 0);
+      setBar('Deadline',  bd.deadline_adherence || 0);
+      setBar('Quality',   bd.work_quality || 0);
+    }, 250);
 
-    // Summary
+    // ── Summary ──
     document.getElementById('pfiSummary').textContent = data.summary || 'No summary available.';
 
-    // History table
-    const tbody = document.getElementById('historyBody');
-    tbody.innerHTML = '';
+    // ── Trust meter ──
+    const trustMeter = document.getElementById('trustMeter');
+    trustMeter.style.display = 'block';
+    setTimeout(() => { document.getElementById('trustBar').style.width = `${score}%`; }, 300);
+
+    // ── History table ──
+    document.getElementById('historyCount').textContent = `${history.length} entries`;
+    if (!history.length) {
+      document.getElementById('historyBody').innerHTML = '<div class="center-msg">No milestone history available</div>';
+      return;
+    }
+    let html = `<table><thead><tr>
+      <th>Milestone</th><th>Verdict</th><th>Score</th><th>Deadline</th>
+    </tr></thead><tbody>`;
     history.forEach(m => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${m.title}</td>
+      const scoreColor = m.score >= 80 ? '#10b981' : m.score >= 60 ? '#f59e0b' : '#ef4444';
+      html += `<tr>
+        <td style="font-weight:500;">${m.title}</td>
         <td><span class="pill pill-${m.verdict}">${m.verdict.toUpperCase()}</span></td>
-        <td style="font-family:'Syne',sans-serif;font-weight:700;">${m.score}/100</td>
-        <td class="${m.met_deadline ? 'deadline-yes' : 'deadline-no'}">${m.met_deadline ? '✓ Yes' : '✗ No'}</td>
-      `;
-      tbody.appendChild(tr);
+        <td>
+          <div class="score-bar-wrap">
+            <span class="score-num" style="color:${scoreColor}">${m.score}</span>
+            <div class="score-mini-track">
+              <div class="score-mini-fill" style="width:${m.score}%;background:${scoreColor}"></div>
+            </div>
+          </div>
+        </td>
+        <td class="${m.met_deadline ? 'dl-yes' : 'dl-no'}">${m.met_deadline ? '✓ On time' : '✗ Late'}</td>
+      </tr>`;
     });
+    html += `</tbody></table>`;
+    document.getElementById('historyBody').innerHTML = html;
   }
 
   function setBar(key, value) {
-    document.getElementById(`b${key.charAt(0).toUpperCase()+key.slice(1)}`).textContent = parseFloat(value).toFixed(1);
-    document.getElementById(`bar${key.charAt(0).toUpperCase()+key.slice(1)}`).style.width = `${Math.min(value,100)}%`;
+    const v = Math.min(parseFloat(value) || 0, 100);
+    document.getElementById(`b${key}`).textContent = v.toFixed(1);
+    document.getElementById(`bar${key}`).style.width = `${v}%`;
   }
 
-  // Auto-load default profile
-  window.onload = () => renderProfile(demoData, 'FL001');
-</script>
+  function animateNum(id, target) {
+    const el = document.getElementById(id);
+    const duration = 900;
+    const start = performance.now();
+    const from = 0;
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(from + (target - from) * ease);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
 
+  window.onload = () => render(DEMO, 'FL001');
+</script>
 </body>
 </html>

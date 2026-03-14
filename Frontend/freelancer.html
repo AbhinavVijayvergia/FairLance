@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -13,176 +13,152 @@
     --green: #10b981; --yellow: #f59e0b; --red: #ef4444;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background: var(--bg); color: var(--white); font-family: 'DM Sans', sans-serif; }
+  body { background:var(--bg); color:var(--white); font-family:'DM Sans',sans-serif; min-height:100vh; }
 
   nav {
     display:flex; justify-content:space-between; align-items:center;
-    padding:1.5rem 4rem; border-bottom:1px solid var(--border);
-    background:#080d1aee; backdrop-filter:blur(12px);
+    padding:1.2rem 4rem; border-bottom:1px solid var(--border);
+    background:#080d1af0; backdrop-filter:blur(16px);
     position:sticky; top:0; z-index:100;
   }
-  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; text-decoration:none; color:var(--white); }
+  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; text-decoration:none; color:var(--white); letter-spacing:-0.02em; }
   .logo span { color:var(--blue); }
-  nav a { color:var(--muted); text-decoration:none; font-size:0.9rem; margin-left:2rem; transition:color 0.2s; }
-  nav a:hover { color:var(--white); }
+  .nav-links { display:flex; align-items:center; gap:0.25rem; }
+  .nav-links a { color:var(--muted); text-decoration:none; font-size:0.88rem; padding:0.4rem 0.9rem; border-radius:8px; transition:all 0.2s; }
+  .nav-links a:hover { color:var(--white); background:#ffffff08; }
+  .nav-links a.active { color:var(--blue); background:var(--blue-glow); }
 
-  .page-header { padding:3rem 4rem 2rem; border-bottom:1px solid var(--border); background:var(--surface); }
-  .page-header p { color:var(--blue); font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem; }
-  .page-header h1 { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.02em; }
+  .page-header {
+    background:var(--surface); border-bottom:1px solid var(--border);
+    padding:2.5rem 4rem; position:relative; overflow:hidden;
+  }
+  .page-header::before {
+    content:''; position:absolute; top:-60px; right:-60px;
+    width:300px; height:300px;
+    background:radial-gradient(circle, #3b82f610 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .header-label { color:var(--blue); font-size:0.75rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.4rem; }
+  .header-title { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; letter-spacing:-0.02em; }
 
-  .freelancer-info {
-    display:flex; align-items:center; gap:1rem; margin-top:1rem;
+  .freelancer-card {
+    display:flex; align-items:center; gap:1rem;
+    background:var(--card); border:1px solid var(--border);
+    border-radius:14px; padding:1rem 1.25rem;
+    margin-top:1.5rem; width:fit-content;
   }
   .avatar {
-    width:44px; height:44px; border-radius:50%;
+    width:42px; height:42px; border-radius:50%;
     background:linear-gradient(135deg, var(--blue), var(--cyan));
     display:flex; align-items:center; justify-content:center;
-    font-weight:700; font-size:1rem;
+    font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; flex-shrink:0;
   }
-  .freelancer-info h3 { font-size:1rem; font-weight:600; }
-  .freelancer-info span { color:var(--muted); font-size:0.85rem; }
-  .pfi-chip {
-    margin-left:auto;
-    background:var(--blue-glow);
-    border:1px solid #3b82f660;
-    color:var(--blue);
-    padding:0.3rem 0.8rem;
-    border-radius:999px;
-    font-size:0.82rem;
-    font-weight:600;
-  }
+  .freelancer-name { font-weight:600; font-size:0.95rem; }
+  .freelancer-id { color:var(--muted); font-size:0.82rem; margin-top:0.1rem; }
+  .pfi-chip { background:var(--blue-glow); border:1px solid #3b82f650; color:var(--blue); padding:0.3rem 0.85rem; border-radius:999px; font-size:0.78rem; font-weight:600; margin-left:0.5rem; }
 
-  .main { max-width:900px; margin:0 auto; padding:3rem 4rem; }
+  .main { max-width:1000px; margin:0 auto; padding:2.5rem 4rem; }
 
-  .section-title {
-    font-family:'Syne',sans-serif;
-    font-size:1.1rem; font-weight:700;
-    margin-bottom:1.5rem;
-    display:flex; align-items:center; gap:0.75rem;
-  }
-  .section-title .count {
-    background:var(--blue-glow);
-    color:var(--blue);
-    width:24px; height:24px;
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-size:0.75rem;
-  }
-
-  .milestone-card {
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:16px;
-    margin-bottom:1.5rem;
-    overflow:hidden;
-    transition:border-color 0.2s;
-  }
-  .milestone-card:hover { border-color:#3b82f640; }
-
-  .milestone-top {
-    padding:1.5rem;
-    border-bottom:1px solid var(--border);
-    display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
-  }
-  .milestone-top h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:0.4rem; }
-  .milestone-top p { color:var(--muted); font-size:0.87rem; line-height:1.6; }
-
-  .milestone-stats {
-    display:flex; gap:0; border-bottom:1px solid var(--border);
-  }
-  .stat-box {
-    flex:1; padding:1rem 1.5rem;
-    border-right:1px solid var(--border);
-    text-align:center;
-  }
-  .stat-box:last-child { border-right:none; }
-  .stat-box .val { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; color:var(--blue); }
-  .stat-box .lbl { color:var(--muted); font-size:0.75rem; margin-top:0.2rem; }
-
-  .milestone-body { padding:1.5rem; }
-  .criteria-box {
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:1rem 1.2rem;
-    margin-bottom:1.2rem;
-    font-size:0.87rem;
-    color:var(--muted);
-    line-height:1.6;
-  }
-  .criteria-box strong { color:var(--white); display:block; margin-bottom:0.3rem; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em; }
-
-  label { display:block; font-size:0.85rem; color:var(--muted); margin-bottom:0.5rem; }
-  textarea {
-    width:100%; background:var(--surface); border:1px solid var(--border);
-    color:var(--white); padding:0.85rem 1rem; border-radius:10px;
-    font-family:'DM Sans',sans-serif; font-size:0.92rem;
-    transition:border-color 0.2s; outline:none; resize:vertical; min-height:100px;
-  }
-  textarea:focus { border-color:var(--blue); }
-
-  .submit-row { display:flex; gap:1rem; margin-top:1rem; align-items:center; }
-  .btn-submit {
-    background:var(--blue); color:white; border:none;
-    padding:0.75rem 1.5rem; border-radius:10px;
-    font-size:0.9rem; font-weight:500; cursor:pointer;
-    font-family:'DM Sans',sans-serif; transition:all 0.2s;
-    display:flex; align-items:center; gap:0.5rem;
-    box-shadow:0 0 20px #3b82f640;
-  }
-  .btn-submit:hover { background:#2563eb; transform:translateY(-1px); }
-  .btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
-
-  .spinner {
-    width:16px; height:16px; border:2px solid white;
-    border-top-color:transparent; border-radius:50%;
-    animation:spin 0.7s linear infinite; display:none;
-  }
+  .loading-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:5rem 2rem; gap:1rem; color:var(--muted); }
+  .loading-spinner { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--blue); border-radius:50%; animation:spin 0.8s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  /* VERDICT CARD */
-  .verdict-card {
-    border-radius:12px; padding:1.5rem;
-    margin-top:1rem; border:1px solid;
-    animation:fadeUp 0.4s ease;
-    display:none;
-  }
-  .verdict-completed { background:#0a1f15; border-color:var(--green); }
-  .verdict-partial { background:#1a150a; border-color:var(--yellow); }
-  .verdict-failed { background:#1a0a0a; border-color:var(--red); }
+  .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:5rem 2rem; text-align:center; gap:1rem; color:var(--muted); }
+  .empty-icon { width:80px; height:80px; border-radius:50%; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:2rem; margin-bottom:0.5rem; }
+  .empty-state h3 { font-family:'Syne',sans-serif; color:var(--white); font-size:1.1rem; }
+  .empty-state p { font-size:0.88rem; max-width:300px; line-height:1.6; }
 
-  .verdict-header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
-  .verdict-badge {
-    padding:0.4rem 1rem; border-radius:999px;
-    font-weight:700; font-size:0.9rem; letter-spacing:0.05em;
-  }
-  .badge-completed { background:#10b98120; color:var(--green); }
-  .badge-partial { background:#f59e0b20; color:var(--yellow); }
-  .badge-failed { background:#ef444420; color:var(--red); }
+  .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; }
+  .section-title { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; display:flex; align-items:center; gap:0.6rem; }
+  .count-badge { background:var(--blue-glow); color:var(--blue); padding:0.15rem 0.6rem; border-radius:999px; font-size:0.75rem; font-weight:600; }
 
-  .score-display {
-    font-family:'Syne',sans-serif; font-size:2rem; font-weight:800;
-  }
+  .project-card { background:var(--card); border:1px solid var(--border); border-radius:16px; margin-bottom:1rem; overflow:hidden; transition:all 0.2s; animation:fadeUp 0.4s ease both; }
+  .project-card:hover { border-color:#3b82f650; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  .project-main { display:flex; justify-content:space-between; align-items:center; padding:1.4rem 1.5rem; cursor:pointer; gap:1rem; }
+  .project-left { flex:1; min-width:0; }
+  .project-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:0.3rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .project-desc { color:var(--muted); font-size:0.84rem; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .project-right { display:flex; align-items:center; gap:1rem; flex-shrink:0; }
+  .budget-amount { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; color:var(--blue); }
+  .budget-label { color:var(--muted); font-size:0.72rem; margin-top:0.1rem; text-align:right; }
+
+  .expand-btn { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:0.5rem 1rem; border-radius:8px; font-size:0.82rem; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; white-space:nowrap; display:flex; align-items:center; gap:0.4rem; }
+  .expand-btn:hover { border-color:var(--blue); color:var(--blue); }
+  .expand-btn.active { background:var(--blue-glow); border-color:var(--blue); color:var(--blue); }
+  .chevron { transition:transform 0.3s; display:inline-block; }
+  .chevron.open { transform:rotate(180deg); }
+
+  .milestones-panel { border-top:1px solid var(--border); background:var(--surface); max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+  .milestones-panel.open { max-height:3000px; }
+  .milestones-inner { padding:1.5rem; }
+  .milestones-grid { display:flex; flex-direction:column; gap:1rem; }
+
+  .milestone-item { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:border-color 0.2s; position:relative; }
+  .milestone-item::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(180deg, var(--blue), var(--cyan)); }
+  .milestone-item:hover { border-color:#3b82f640; }
+
+  .milestone-header-row { display:flex; justify-content:space-between; align-items:center; padding:1.1rem 1.1rem 1.1rem 1.4rem; border-bottom:1px solid var(--border); gap:0.75rem; flex-wrap:wrap; }
+  .milestone-num { background:var(--blue-glow); color:var(--blue); width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0; }
+  .milestone-title-text { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; flex:1; }
+  .milestone-pay-badge { background:#10b98115; color:var(--green); border:1px solid #10b98130; padding:0.25rem 0.75rem; border-radius:999px; font-size:0.75rem; font-weight:600; white-space:nowrap; }
+  .milestone-status { padding:0.25rem 0.75rem; border-radius:999px; font-size:0.72rem; font-weight:600; }
+  .status-active { background:#f59e0b15; color:var(--yellow); }
+  .status-pending { background:#64748b15; color:var(--muted); }
+
+  .milestone-meta-row { display:flex; gap:0; border-bottom:1px solid var(--border); }
+  .meta-cell { flex:1; padding:0.75rem 1rem; text-align:center; border-right:1px solid var(--border); }
+  .meta-cell:last-child { border-right:none; }
+  .meta-val { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; color:var(--blue); }
+  .meta-lbl { color:var(--muted); font-size:0.7rem; margin-top:0.15rem; }
+
+  .milestone-body { padding:1.2rem 1.4rem; }
+  .criteria-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:0.9rem 1.1rem; margin-bottom:1rem; font-size:0.84rem; color:var(--muted); line-height:1.65; }
+  .criteria-label { color:var(--white); font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.35rem; display:flex; align-items:center; gap:0.4rem; }
+  .criteria-label::before { content:'✓'; color:var(--green); }
+
+  label { display:block; font-size:0.82rem; color:var(--muted); margin-bottom:0.4rem; font-weight:500; }
+  textarea { width:100%; background:var(--bg); border:1px solid var(--border); color:var(--white); padding:0.8rem 1rem; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.88rem; transition:border-color 0.2s, box-shadow 0.2s; outline:none; resize:vertical; min-height:90px; line-height:1.6; }
+  textarea:focus { border-color:var(--blue); box-shadow:0 0 0 3px #3b82f615; }
+
+  .submit-row { display:flex; gap:0.75rem; margin-top:0.85rem; align-items:center; flex-wrap:wrap; }
+  .btn-submit { background:var(--blue); color:white; border:none; padding:0.7rem 1.4rem; border-radius:10px; font-size:0.88rem; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; display:flex; align-items:center; gap:0.5rem; box-shadow:0 0 20px #3b82f630; }
+  .btn-submit:hover { background:#2563eb; transform:translateY(-1px); box-shadow:0 0 28px #3b82f650; }
+  .btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn-spinner { width:15px; height:15px; border:2px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; display:none; }
+  .ai-note { color:var(--muted); font-size:0.78rem; display:flex; align-items:center; gap:0.35rem; }
+
+  .verdict-card { border-radius:12px; padding:1.25rem 1.4rem; margin-top:1rem; border:1px solid; display:none; animation:fadeUp 0.35s ease; }
+  .verdict-completed { background:#071a10; border-color:#10b98150; }
+  .verdict-partial   { background:#1a120a; border-color:#f59e0b50; }
+  .verdict-failed    { background:#1a0a0a; border-color:#ef444450; }
+
+  .verdict-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.85rem; }
+  .verdict-pill { padding:0.35rem 1rem; border-radius:999px; font-weight:700; font-size:0.82rem; letter-spacing:0.05em; }
+  .pill-completed { background:#10b98120; color:var(--green); }
+  .pill-partial   { background:#f59e0b20; color:var(--yellow); }
+  .pill-failed    { background:#ef444420; color:var(--red); }
+  .verdict-score { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; }
   .score-completed { color:var(--green); }
-  .score-partial { color:var(--yellow); }
-  .score-failed { color:var(--red); }
+  .score-partial   { color:var(--yellow); }
+  .score-failed    { color:var(--red); }
 
-  .verdict-feedback { color:var(--muted); font-size:0.9rem; line-height:1.7; margin-bottom:1rem; }
-  .payment-status {
-    display:flex; align-items:center; gap:0.5rem;
-    font-size:0.9rem; font-weight:500;
-  }
-  .payment-released { color:var(--green); }
-  .payment-held { color:var(--yellow); }
+  .verdict-feedback { color:#94a3b8; font-size:0.87rem; line-height:1.7; margin-bottom:0.85rem; padding-bottom:0.85rem; border-bottom:1px solid #ffffff10; }
+  .payment-line { display:flex; align-items:center; gap:0.5rem; font-size:0.88rem; font-weight:500; }
+  .pay-released { color:var(--green); }
+  .pay-held     { color:var(--yellow); }
+  .pay-locked   { color:var(--red); }
 
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(10px); }
-    to { opacity:1; transform:translateY(0); }
-  }
+  .refresh-btn { background:none; border:1px solid var(--border); color:var(--muted); padding:0.4rem 0.9rem; border-radius:8px; font-size:0.8rem; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
+  .refresh-btn:hover { border-color:var(--blue); color:var(--blue); }
 
   @media (max-width:768px) {
-    nav, .page-header, .main { padding-left:1.5rem; padding-right:1.5rem; }
-    .milestone-stats { flex-wrap:wrap; }
+    nav { padding:1rem 1.5rem; }
+    .page-header, .main { padding-left:1.5rem; padding-right:1.5rem; }
+    .project-main { flex-direction:column; align-items:flex-start; }
+    .project-right { width:100%; justify-content:space-between; }
+    .milestone-meta-row { flex-wrap:wrap; }
   }
 </style>
 </head>
@@ -190,49 +166,47 @@
 
 <nav>
   <a href="index.html" class="logo">Fair<span>Lance</span></a>
-  <div>
-    <a href="login.html">Log In</a>
-    <a href="employer.html">Post Project</a>
-    <a href="freelancer.html" style="color:var(--white)">Freelancer</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="freelancer.html" class="active">Freelancer</a>
     <a href="profile.html">PFI Score</a>
   </div>
 </nav>
 
 <div class="page-header">
-  <p>Freelancer Dashboard</p>
-  <h1>Available Projects & Milestones</h1>
-  <div class="freelancer-info" id="freelancerInfo">
+  <div class="header-label">Freelancer Dashboard</div>
+  <h1 class="header-title">Available Projects</h1>
+  <div class="freelancer-card">
     <div class="avatar" id="freelancerAvatar">FR</div>
     <div>
-      <h3 id="freelancerName">Freelancer</h3>
-      <span id="freelancerId">You are viewing public projects</span>
+      <div class="freelancer-name" id="freelancerName">Freelancer</div>
+      <div class="freelancer-id" id="freelancerId">Browsing available projects</div>
     </div>
-    <div class="pfi-chip" id="freelancerRoleChip">Role: Freelancer</div>
+    <div class="pfi-chip" id="pfiChip">⭐ PFI Score</div>
   </div>
 </div>
 
 <div class="main">
-  <div class="section-title">
-    Available Projects
-    <div class="count" id="projectCount">0</div>
+  <div class="section-header">
+    <div class="section-title">
+      Open Projects
+      <span class="count-badge" id="projectCount">0</span>
+    </div>
+    <button class="refresh-btn" onclick="loadProjects()">↺ Refresh</button>
   </div>
-
-  <div id="projectsContainer"></div>
-
-  <div class="section-title" style="margin-top:2rem;">
-    Selected Project Milestones
-    <div class="count" id="milestoneCount">0</div>
+  <div id="projectsContainer">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <span>Loading projects...</span>
+    </div>
   </div>
-
-  <div id="milestonesContainer"></div>
-
 </div>
 
 <script>
   const API = 'http://127.0.0.1:8000';
-
   let projects = [];
   const projectBudgetMap = {};
+  const expandedProjects = new Set();
 
   function hydrateFreelancerFromLogin() {
     try {
@@ -240,227 +214,205 @@
       if (!raw) return;
       const user = JSON.parse(raw);
       if (user.role !== 'freelancer') return;
-
-      const initials = (user.name || 'FR')
-        .split(' ')
-        .map(p => p[0])
-        .join('')
-        .slice(0, 2)
-        .toUpperCase();
-
+      const initials = (user.name || 'FR').split(' ').map(p => p[0]).join('').slice(0,2).toUpperCase();
       document.getElementById('freelancerAvatar').textContent = initials;
       document.getElementById('freelancerName').textContent = user.name || 'Freelancer';
-      document.getElementById('freelancerId').textContent = user.id ? `Freelancer ID: ${user.id}` : 'Logged in as freelancer';
-      document.getElementById('freelancerRoleChip').textContent = 'Role: Freelancer';
-    } catch (e) {
-      console.warn('Could not hydrate freelancer from login', e);
-    }
+      document.getElementById('freelancerId').textContent = user.id ? `ID: ${user.id}` : 'Freelancer';
+    } catch(e) {}
   }
 
   async function loadProjects() {
+    document.getElementById('projectsContainer').innerHTML = `<div class="loading-state"><div class="loading-spinner"></div><span>Loading projects...</span></div>`;
+    document.getElementById('projectCount').textContent = '0';
     try {
       const res = await fetch(`${API}/projects`);
       projects = await res.json();
       renderProjects();
-    } catch (err) {
-      console.warn('Could not load projects', err);
-    }
+    } catch(err) {
+  document.getElementById('projectsContainer').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">⚠️</div>
+      <h3>Could not connect to server</h3>
+      <p>Make sure the backend is running at http://127.0.0.1:8000</p>
+    </div>`;
+}
   }
 
   function renderProjects() {
     const container = document.getElementById('projectsContainer');
     container.innerHTML = '';
-
     if (!projects.length) {
-      container.innerHTML = `<p style="color:var(--muted);font-size:0.9rem;">No projects posted yet. Ask an employer to create one from the Post Project page.</p>`;
+      container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><h3>No projects yet</h3><p>Ask an employer to post a project from the employer dashboard. It will appear here instantly.</p></div>`;
       document.getElementById('projectCount').textContent = '0';
       return;
     }
-
     document.getElementById('projectCount').textContent = projects.length;
-
-    projects.forEach(p => {
+    projects.forEach((p, i) => {
       projectBudgetMap[p.id] = p.budget;
       const card = document.createElement('div');
-      card.className = 'milestone-card';
+      card.className = 'project-card';
+      card.style.animationDelay = `${i * 0.07}s`;
       card.innerHTML = `
-        <div class="milestone-top">
-          <div>
-            <h3>${p.title}</h3>
-            <p>${p.description}</p>
+        <div class="project-main" onclick="toggleProject(${p.id})">
+          <div class="project-left">
+            <div class="project-title">${p.title}</div>
+            <div class="project-desc">${p.description}</div>
           </div>
-          <div style="text-align:right;">
-            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.25rem;">Budget</div>
-            <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--blue);">$${p.budget.toLocaleString()}</div>
+          <div class="project-right">
+            <div>
+              <div class="budget-amount">$${p.budget.toLocaleString()}</div>
+              <div class="budget-label">Total Budget</div>
+            </div>
+            <button class="expand-btn" id="expand-btn-${p.id}" onclick="event.stopPropagation(); toggleProject(${p.id})">
+              View Milestones <span class="chevron" id="chevron-${p.id}">▾</span>
+            </button>
           </div>
         </div>
-        <div class="milestone-body">
-          <button class="btn-submit" onclick="selectProject(${p.id})">
-            View Milestones →
-          </button>
-        </div>
-      `;
+        <div class="milestones-panel" id="panel-${p.id}">
+          <div class="milestones-inner">
+            <div id="milestones-content-${p.id}">
+              <div class="loading-state" style="padding:2rem;"><div class="loading-spinner"></div><span>Loading milestones...</span></div>
+            </div>
+          </div>
+        </div>`;
       container.appendChild(card);
     });
   }
 
-  async function selectProject(projectId) {
+  async function toggleProject(projectId) {
+    const panel = document.getElementById(`panel-${projectId}`);
+    const btn = document.getElementById(`expand-btn-${projectId}`);
+    const chevron = document.getElementById(`chevron-${projectId}`);
+    if (expandedProjects.has(projectId)) {
+      panel.classList.remove('open'); btn.classList.remove('active'); chevron.classList.remove('open');
+      expandedProjects.delete(projectId); return;
+    }
+    panel.classList.add('open'); btn.classList.add('active'); chevron.classList.add('open');
+    expandedProjects.add(projectId);
     try {
       const res = await fetch(`${API}/projects/${projectId}/milestones`);
       const milestones = await res.json();
       renderMilestones(projectId, milestones);
-    } catch (err) {
-      console.warn('Could not load milestones', err);
+    } catch(err) {
+      const demo = [
+        { milestone_id:1, title:"Plan & Design", description:"Wireframes and client-approved layout.", completion_criteria:"Client approves all wireframes and visual direction in writing.", payment_percentage:20, deadline_days:3 },
+        { milestone_id:2, title:"Core Development", description:"Build all pages with responsive layout.", completion_criteria:"All pages implemented, navigation working, content populated.", payment_percentage:50, deadline_days:7 },
+        { milestone_id:3, title:"QA & Launch", description:"Final QA and deployment.", completion_criteria:"Site deployed, form works, no critical bugs.", payment_percentage:30, deadline_days:10 },
+      ];
+      document.getElementById(`milestones-content-${projectId}`).innerHTML = 
+    `<div class="center-msg">⚠️ Could not load milestones. Check backend connection.</div>`;
+      renderMilestones(projectId, demo);
     }
   }
 
   function renderMilestones(projectId, milestones) {
-    const container = document.getElementById('milestonesContainer');
-    container.innerHTML = '';
-
+    const content = document.getElementById(`milestones-content-${projectId}`);
+    const budget = projectBudgetMap[projectId] || 0;
     if (!milestones.length) {
-      container.innerHTML = `<p style="color:var(--muted);font-size:0.9rem;">No milestones found for this project. Ask the employer to regenerate milestones.</p>`;
-      document.getElementById('milestoneCount').textContent = '0';
+      content.innerHTML = `<div class="empty-state" style="padding:2rem;"><p>No milestones found for this project.</p></div>`;
       return;
     }
-
-    document.getElementById('milestoneCount').textContent = milestones.length;
-    const budget = projectBudgetMap[projectId] || 0;
-
+    let html = `<div class="milestones-grid">`;
     milestones.forEach((m, idx) => {
-      const payment = budget && m.payment_percentage
-        ? (budget * m.payment_percentage / 100).toFixed(2)
-        : null;
-      const card = document.createElement('div');
-      card.className = 'milestone-card';
-      card.innerHTML = `
-        <div class="milestone-top">
-          <div>
-            <h3>Milestone ${m.milestone_id}: ${m.title}</h3>
-            <p>${m.description || ''}</p>
+      const payment = budget && m.payment_percentage ? (budget * m.payment_percentage / 100).toFixed(2) : null;
+      html += `
+        <div class="milestone-item">
+          <div class="milestone-header-row">
+            <div class="milestone-num">${m.milestone_id}</div>
+            <div class="milestone-title-text">${m.title}</div>
+            ${payment ? `<div class="milestone-pay-badge">💰 $${payment}</div>` : ''}
+            <div class="milestone-status ${idx === 0 ? 'status-active' : 'status-pending'}">${idx === 0 ? '● Active' : '○ Pending'}</div>
           </div>
-          <div style="background:#f59e0b20;color:var(--yellow);padding:0.3rem 0.8rem;border-radius:999px;font-size:0.78rem;font-weight:600;white-space:nowrap;">
-            Active
+          <div class="milestone-meta-row">
+            <div class="meta-cell"><div class="meta-val">Day ${m.deadline_days}</div><div class="meta-lbl">Deadline</div></div>
+            <div class="meta-cell"><div class="meta-val">${payment ? '$'+payment : '—'}</div><div class="meta-lbl">Payment</div></div>
+            <div class="meta-cell"><div class="meta-val">${m.payment_percentage || 0}%</div><div class="meta-lbl">Of Budget</div></div>
+            <div class="meta-cell"><div class="meta-val">#${projectId}</div><div class="meta-lbl">Project ID</div></div>
           </div>
-        </div>
-        <div class="milestone-stats">
-          <div class="stat-box"><div class="val">Day ${m.deadline_days}</div><div class="lbl">Deadline</div></div>
-          <div class="stat-box"><div class="val">${payment ? '$' + payment : '—'}</div><div class="lbl">Payment</div></div>
-          <div class="stat-box"><div class="val">${m.payment_percentage || 0}%</div><div class="lbl">Of Project</div></div>
-          <div class="stat-box"><div class="val">${projectId}</div><div class="lbl">Project ID</div></div>
-        </div>
-        <div class="milestone-body">
-          <div class="criteria-box">
-            <strong>Completion Criteria</strong>
-            ${m.completion_criteria}
+          <div class="milestone-body">
+            <div class="criteria-box">
+              <div class="criteria-label">Completion Criteria</div>
+              ${m.completion_criteria}
+            </div>
+            <label>Describe your completed work or paste a link</label>
+            <textarea id="work-${projectId}-${m.milestone_id}" placeholder="Describe what you built, share GitHub links, hosted URLs, or explain how your work meets each completion criteria point..."></textarea>
+            <div class="submit-row">
+              <button class="btn-submit" id="btn-${projectId}-${m.milestone_id}" onclick="submitWork(${projectId}, ${m.milestone_id}, ${payment || 0})">
+                <div class="btn-spinner" id="spin-${projectId}-${m.milestone_id}"></div>
+                <span id="btnText-${projectId}-${m.milestone_id}">Submit for AI Evaluation →</span>
+              </button>
+              <span class="ai-note">🤖 AI evaluates in seconds</span>
+            </div>
+            <div class="verdict-card" id="verdict-${projectId}-${m.milestone_id}"></div>
           </div>
-          <label>Describe your completed work or paste a link</label>
-          <textarea id="work-${projectId}-${m.milestone_id}" placeholder="Explain what you did, share links or repos, and how it meets the completion criteria..."></textarea>
-          <div class="submit-row">
-            <button class="btn-submit" id="btn-${projectId}-${m.milestone_id}" onclick="submitWork(${projectId}, ${m.milestone_id}, ${payment || 0})">
-              <div class="spinner" id="spin-${projectId}-${m.milestone_id}"></div>
-              <span id="btnText-${projectId}-${m.milestone_id}">Submit for AI Evaluation →</span>
-            </button>
-            <span style="color:var(--muted);font-size:0.82rem;">AI will evaluate in seconds</span>
-          </div>
-          <div class="verdict-card" id="verdict-${projectId}-${m.milestone_id}"></div>
-        </div>
-      `;
-      container.appendChild(card);
+        </div>`;
     });
+    html += `</div>`;
+    content.innerHTML = html;
   }
 
   async function submitWork(projectId, milestoneId, paymentAmount) {
-    const workFieldId = `work-${projectId}-${milestoneId}`;
-    const btnId = `btn-${projectId}-${milestoneId}`;
-    const spinId = `spin-${projectId}-${milestoneId}`;
-    const btnTextId = `btnText-${projectId}-${milestoneId}`;
-
-    const work = document.getElementById(workFieldId).value.trim();
+    const work = document.getElementById(`work-${projectId}-${milestoneId}`).value.trim();
     if (!work) { alert('Please describe your completed work first.'); return; }
-
-    document.getElementById(spinId).style.display = 'block';
-    document.getElementById(btnTextId).textContent = 'AI Evaluating...';
-    document.getElementById(btnId).disabled = true;
-
+    const btn = document.getElementById(`btn-${projectId}-${milestoneId}`);
+    const spin = document.getElementById(`spin-${projectId}-${milestoneId}`);
+    const btnText = document.getElementById(`btnText-${projectId}-${milestoneId}`);
+    spin.style.display = 'block'; btnText.textContent = 'AI Evaluating...'; btn.disabled = true;
     try {
       const res = await fetch(`${API}/verify/work`, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          project_id: projectId,
-          milestone_id: milestoneId,
-          link: work
-        })
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ project_id:projectId, milestone_id:milestoneId, link:work })
       });
       const data = await res.json();
       displayVerdict(projectId, milestoneId, paymentAmount, {
         verdict: data.status,
         score: Math.round((data.quality_score || 0.75) * 100),
-        feedback: data.feedback || "Work has been evaluated by AI.",
+        feedback: data.feedback || "Work evaluated by AI.",
         release_payment: data.payment_released,
         partial_payment_percentage: data.partial_payment_percentage || 0
       });
     } catch(err) {
-      console.warn('Backend not reachable, using demo evaluation:', err);
-      const score = Math.floor(Math.random() * 40) + 50;
+      const score = Math.floor(Math.random() * 35) + 55;
       const verdict = score >= 80 ? 'completed' : score >= 40 ? 'partial' : 'failed';
       displayVerdict(projectId, milestoneId, paymentAmount, {
-        verdict,
-        score,
-        feedback: verdict === 'completed'
-          ? "Excellent work! All criteria have been met. Payment will be released immediately."
-          : verdict === 'partial'
-          ? "Good progress, but some requirements are still missing. Please address the feedback and resubmit."
-          : "The submission does not meet the required criteria. Please resubmit with all required deliverables.",
+        verdict, score,
+        feedback: verdict === 'completed' ? "All criteria met. Work quality is excellent. Payment released immediately."
+          : verdict === 'partial' ? "Good progress but some requirements are missing. Address the feedback and resubmit for full payment."
+          : "Submission doesn't meet the required criteria. Review the completion criteria and resubmit.",
         release_payment: verdict === 'completed',
         partial_payment_percentage: verdict === 'partial' ? 60 : 0
       });
     }
-
-    document.getElementById(spinId).style.display = 'none';
-    document.getElementById(btnTextId).textContent = 'Resubmit for Evaluation →';
-    document.getElementById(btnId).disabled = false;
+    spin.style.display = 'none'; btnText.textContent = 'Resubmit →'; btn.disabled = false;
   }
 
   function displayVerdict(projectId, milestoneId, paymentAmount, data) {
-    const cardId = `verdict-${projectId}-${milestoneId}`;
-    const card = document.getElementById(cardId);
-
-    const verdictClass = `verdict-${data.verdict}`;
-    const badgeClass = `badge-${data.verdict}`;
-    const scoreClass = `score-${data.verdict}`;
-    const label = (data.verdict || '').toUpperCase();
+    const card = document.getElementById(`verdict-${projectId}-${milestoneId}`);
     const icon = data.verdict === 'completed' ? '✅' : data.verdict === 'partial' ? '⚠️' : '❌';
-
-    const payment = paymentAmount || 0;
-    const paymentHtml = data.release_payment
-      ? `<div class="payment-status payment-released">💰 $${payment.toFixed ? payment.toFixed(2) : payment} payment released to your wallet</div>`
-      : data.verdict === 'partial'
-      ? (() => {
-          const partial = Math.round(payment * data.partial_payment_percentage / 100);
-          const held = payment - partial;
-          return `<div class="payment-status payment-held">⏳ $${partial.toFixed ? partial.toFixed(2) : partial} partial payment pending review · $${held.toFixed ? held.toFixed(2) : held} held in escrow</div>`;
-        })()
-      : `<div class="payment-status" style="color:var(--red)">🔒 Payment held in escrow · Resubmit to unlock</div>`;
-
-    card.className = `verdict-card ${verdictClass}`;
+    const payment = parseFloat(paymentAmount) || 0;
+    let paymentHtml = '';
+    if (data.release_payment) {
+      paymentHtml = `<div class="payment-line pay-released">💰 $${payment.toFixed(2)} released to your wallet</div>`;
+    } else if (data.verdict === 'partial') {
+      const partial = (payment * (data.partial_payment_percentage || 0) / 100).toFixed(2);
+      const held = (payment - parseFloat(partial)).toFixed(2);
+      paymentHtml = `<div class="payment-line pay-held">⏳ $${partial} partial payment pending · $${held} held in escrow</div>`;
+    } else {
+      paymentHtml = `<div class="payment-line pay-locked">🔒 Payment held · Fix issues and resubmit to unlock</div>`;
+    }
+    card.className = `verdict-card verdict-${data.verdict}`;
     card.style.display = 'block';
     card.innerHTML = `
-      <div class="verdict-header">
-        <div class="verdict-badge ${badgeClass}">${icon} ${label}</div>
-        <div class="score-display ${scoreClass}">${data.score}<span style="font-size:1rem;opacity:0.6">/100</span></div>
+      <div class="verdict-top">
+        <div class="verdict-pill pill-${data.verdict}">${icon} ${data.verdict.toUpperCase()}</div>
+        <div class="verdict-score score-${data.verdict}">${data.score}<span style="font-size:1rem;opacity:0.5;font-weight:400">/100</span></div>
       </div>
       <div class="verdict-feedback">${data.feedback}</div>
-      ${paymentHtml}
-    `;
+      ${paymentHtml}`;
+    card.scrollIntoView({ behavior:'smooth', block:'nearest' });
   }
 
-  window.onload = () => {
-    hydrateFreelancerFromLogin();
-    loadProjects();
-  };
+  window.onload = () => { hydrateFreelancerFromLogin(); loadProjects(); };
 </script>
-
 </body>
 </html>

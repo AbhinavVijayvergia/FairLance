@@ -60,10 +60,50 @@ def generate_milestones(project_description, total_budget):
 # Input:  milestone (dict), submitted_work (str)
 # Output: evaluation dict with verdict, score, feedback
 # ============================================================
-
 def evaluate_work(milestone, submitted_work):
+
+    # ── Python detects vague/incomplete BEFORE calling AI ──
+    work_lower = submitted_work.lower().strip()
+
+    vague_phrases = [
+        "will do", "will submit", "not finished", "not done", "in progress",
+        "working on it", "coming soon", "will complete", "haven't", "have not",
+        "not yet", "soon", "later", "pending", "incomplete", "not started",
+        "will send", "almost done", "nearly done", "not ready"
+    ]
+
+    is_incomplete = any(phrase in work_lower for phrase in vague_phrases)
+    is_too_short = len(submitted_work.strip()) < 80
+    is_vague = is_incomplete or is_too_short
+
+    # Hard cap scores before even calling AI
+    if is_incomplete:
+        return {
+            "success": True,
+            "data": {
+                "verdict": "failed",
+                "score": 15,
+                "feedback": "Submission indicates work is not yet complete. Payment cannot be released until all milestone criteria are fully delivered. Please resubmit once the work is finished.",
+                "release_payment": False,
+                "partial_payment_percentage": 0
+            }
+        }
+
+    if is_too_short:
+        return {
+            "success": True,
+            "data": {
+                "verdict": "failed",
+                "score": 20,
+                "feedback": "Submission is too vague and lacks sufficient detail. Please provide specific deliverables, links, or evidence that each completion criterion has been met.",
+                "release_payment": False,
+                "partial_payment_percentage": 0
+            }
+        }
+
+    # ── Only reach here if submission looks substantial ──
     prompt = f"""
-    You are a strict but fair project quality evaluator for a freelance platform.
+    You are a strict project quality evaluator for a freelance platform.
     
     Milestone Title: {milestone['title']}
     Completion Criteria: {milestone['completion_criteria']}
@@ -71,20 +111,14 @@ def evaluate_work(milestone, submitted_work):
     Freelancer's Submitted Work:
     {submitted_work}
     
-    Evaluate the submission and return ONLY a JSON object, no extra text, no markdown:
+    Return ONLY a JSON object, no extra text, no markdown:
     {{
-        "verdict": "completed" or "partial" or "failed",
-        "score": <number from 0 to 100>,
-        "feedback": "specific feedback explaining the verdict",
-        "release_payment": true or false,
-        "partial_payment_percentage": <0 to 100, only relevant if verdict is partial>
+        "criteria_met": <integer, how many criteria points are explicitly proven>,
+        "criteria_total": <integer, total criteria points in the criteria text>,
+        "has_evidence": true or false,
+        "client_approved": true or false,
+        "feedback": "specific feedback on what was done well and what is missing"
     }}
-    
-    Rules:
-    - "completed" = score 80 and above, release_payment is true
-    - "partial"   = score 40 to 79, release_payment is false, give partial_payment_percentage
-    - "failed"    = score below 40, release_payment is false, partial_payment_percentage is 0
-    - Be specific in feedback, tell the freelancer exactly what is missing
     """
 
     try:
@@ -93,14 +127,48 @@ def evaluate_work(milestone, submitted_work):
             messages=[{"role": "user", "content": prompt}]
         )
         raw = response.choices[0].message.content
-        evaluation = json.loads(raw)
-        return {"success": True, "data": evaluation}
+        analysis = json.loads(raw)
+
+        # ── Score calculated in Python ──
+        total = max(analysis.get("criteria_total", 1), 1)
+        met = min(analysis.get("criteria_met", 0), total)
+        score = int((met / total) * 100)
+
+        if not analysis.get("has_evidence"):
+            score = int(score * 0.55)
+
+        if analysis.get("client_approved"):
+            score = min(score + 10, 100)
+
+        # Verdict from score
+        if score >= 80:
+            verdict = "completed"
+            release_payment = True
+            partial_pct = 100
+        elif score >= 40:
+            verdict = "partial"
+            release_payment = False
+            partial_pct = score
+        else:
+            verdict = "failed"
+            release_payment = False
+            partial_pct = 0
+
+        return {
+            "success": True,
+            "data": {
+                "verdict": verdict,
+                "score": score,
+                "feedback": analysis.get("feedback", ""),
+                "release_payment": release_payment,
+                "partial_payment_percentage": partial_pct
+            }
+        }
+
     except json.JSONDecodeError:
         return {"success": False, "error": "AI returned invalid format"}
     except Exception as e:
         return {"success": False, "error": str(e)}
-
-
 # ============================================================
 # FUNCTION 3: CALCULATE PFI
 # Input:  freelancer_history (dict)

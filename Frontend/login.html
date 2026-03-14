@@ -7,120 +7,117 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg: #080d1a;
-    --surface: #0f172a;
-    --card: #131f35;
-    --blue: #3b82f6;
-    --blue-glow: #3b82f640;
-    --cyan: #06b6d4;
-    --white: #f0f6ff;
-    --muted: #64748b;
-    --border: #1e2d45;
-    --green: #10b981;
-    --red: #ef4444;
+    --bg:#080d1a; --surface:#0f172a; --card:#131f35;
+    --blue:#3b82f6; --blue-glow:#3b82f640; --cyan:#06b6d4;
+    --white:#f0f6ff; --muted:#64748b; --border:#1e2d45;
+    --green:#10b981; --red:#ef4444;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--white); font-family:'DM Sans',sans-serif; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;}
 
-  nav {
-    display:flex; justify-content:space-between; align-items:center;
-    padding:1.5rem 4rem; border-bottom:1px solid var(--border);
-    background:#080d1aee; backdrop-filter:blur(12px);
+  nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.2rem 4rem;border-bottom:1px solid var(--border);
+    background:#080d1af0;backdrop-filter:blur(16px);
   }
-  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; text-decoration:none; color:var(--white); }
-  .logo span { color:var(--blue); }
-  nav a { color:var(--muted); text-decoration:none; font-size:0.9rem; margin-left:2rem; transition:color 0.2s; }
-  nav a:hover { color:var(--white); }
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;text-decoration:none;color:var(--white);letter-spacing:-0.02em;}
+  .logo span{color:var(--blue);}
 
-  .page {
-    min-height:calc(100vh - 80px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  .page{
+    min-height:calc(100vh - 65px);
+    display:flex;align-items:center;justify-content:center;
     padding:2rem 1.5rem;
+    position:relative;overflow:hidden;
+  }
+  .page::before{
+    content:'';position:absolute;
+    width:600px;height:600px;
+    background:radial-gradient(circle,#3b82f60a 0%,transparent 65%);
+    top:50%;left:50%;transform:translate(-50%,-50%);
+    pointer-events:none;
   }
 
-  .card {
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:2.5rem 2.25rem;
-    max-width:480px;
-    width:100%;
-    box-shadow:0 30px 80px #02061780;
+  .card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:20px;padding:2.5rem 2.25rem;
+    max-width:460px;width:100%;
+    box-shadow:0 40px 100px #02061799;
+    position:relative;z-index:1;
+    animation:fadeUp 0.5s ease both;
   }
-  .badge {
-    display:inline-flex; align-items:center; gap:0.5rem;
-    background:var(--blue-glow);
-    border:1px solid #3b82f660;
-    color:var(--blue);
-    padding:0.3rem 0.8rem;
-    border-radius:999px;
-    font-size:0.78rem; font-weight:600;
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    background:var(--blue-glow);border:1px solid #3b82f650;
+    color:var(--blue);padding:0.3rem 0.85rem;
+    border-radius:999px;font-size:0.75rem;font-weight:600;
     margin-bottom:1.5rem;
   }
-  .badge-dot {
-    width:6px; height:6px; border-radius:50%;
-    background:var(--green);
-  }
-  h1 {
-    font-family:'Syne',sans-serif;
-    font-size:1.8rem; font-weight:800;
-    letter-spacing:-0.02em;
-    margin-bottom:0.5rem;
-  }
-  .sub {
-    color:var(--muted);
-    font-size:0.9rem;
-    margin-bottom:1.75rem;
-  }
+  .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.3);}}
 
-  .form-group { margin-bottom:1.3rem; }
-  label { display:block; font-size:0.8rem; color:var(--muted); margin-bottom:0.4rem; font-weight:500; }
-  input, select {
-    width:100%; background:var(--surface); border:1px solid var(--border);
-    color:var(--white); padding:0.8rem 1rem; border-radius:10px;
-    font-family:'DM Sans',sans-serif; font-size:0.9rem;
-    outline:none; transition:border-color 0.2s;
-  }
-  input:focus, select:focus { border-color:var(--blue); }
+  h1{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.4rem;}
+  .sub{color:var(--muted);font-size:0.88rem;margin-bottom:2rem;line-height:1.6;}
 
-  .role-row {
-    display:flex; gap:0.75rem; margin-top:0.4rem;
+  .form-group{margin-bottom:1.3rem;}
+  label{display:block;font-size:0.78rem;color:var(--muted);margin-bottom:0.4rem;font-weight:500;letter-spacing:0.03em;}
+  input{
+    width:100%;background:var(--surface);border:1px solid var(--border);
+    color:var(--white);padding:0.8rem 1rem;border-radius:10px;
+    font-family:'DM Sans',sans-serif;font-size:0.9rem;
+    outline:none;transition:border-color 0.2s,box-shadow 0.2s;
   }
-  .role-pill {
-    flex:1; text-align:center; cursor:pointer;
-    padding:0.6rem 0.8rem; border-radius:999px;
-    border:1px solid var(--border);
-    font-size:0.85rem; color:var(--muted);
-    background:var(--surface);
-    transition:all 0.2s;
-  }
-  .role-pill.active {
-    border-color:var(--blue);
-    color:var(--blue);
-    background:var(--blue-glow);
-  }
+  input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #3b82f615;}
 
-  .btn-primary {
-    width:100%; margin-top:1.5rem;
-    background:var(--blue); color:white; border:none;
-    padding:0.9rem; border-radius:10px;
-    font-size:0.95rem; font-weight:500;
-    cursor:pointer; font-family:'DM Sans',sans-serif;
+  /* ROLE CARDS */
+  .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.4rem;}
+  .role-card{
+    cursor:pointer;border:1px solid var(--border);
+    border-radius:14px;padding:1.1rem 1rem;
+    background:var(--surface);transition:all 0.2s;
+    text-align:left;
+  }
+  .role-card:hover{border-color:#3b82f650;}
+  .role-card.active{border-color:var(--blue);background:var(--blue-glow);}
+  .role-icon{font-size:1.5rem;margin-bottom:0.5rem;}
+  .role-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:0.2rem;}
+  .role-desc{color:var(--muted);font-size:0.75rem;line-height:1.4;}
+  .role-card.active .role-name{color:var(--blue);}
+  .role-card.active .role-desc{color:#7aa4d4;}
+
+  .freelancer-id-wrap{
+    margin-top:1rem;
+    overflow:hidden;
+    max-height:0;
+    transition:max-height 0.3s ease,opacity 0.3s ease;
+    opacity:0;
+  }
+  .freelancer-id-wrap.show{max-height:80px;opacity:1;}
+
+  .btn-primary{
+    width:100%;margin-top:1.5rem;
+    background:var(--blue);color:white;border:none;
+    padding:0.9rem;border-radius:12px;
+    font-size:0.95rem;font-weight:600;
+    cursor:pointer;font-family:'DM Sans',sans-serif;
     box-shadow:0 0 30px #3b82f640;
-    transition:all 0.2s;
+    transition:all 0.2s;letter-spacing:0.01em;
   }
-  .btn-primary:hover { background:#2563eb; transform:translateY(-1px); }
+  .btn-primary:hover{background:#2563eb;transform:translateY(-1px);box-shadow:0 0 40px #3b82f660;}
 
-  .hint {
-    margin-top:1rem; font-size:0.78rem; color:var(--muted);
+  .divider{
+    display:flex;align-items:center;gap:0.75rem;
+    margin:1.5rem 0 0;color:var(--muted);font-size:0.75rem;
   }
-  .hint a { color:var(--blue); text-decoration:none; }
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
-  @media (max-width:768px) {
-    nav { padding:1rem 1.5rem; }
-    .card { padding:2rem 1.5rem; }
+  .hint{margin-top:1rem;font-size:0.76rem;color:var(--muted);line-height:1.6;text-align:center;}
+
+  @media(max-width:480px){
+    nav{padding:1rem 1.5rem;}
+    .card{padding:2rem 1.25rem;}
+    .role-grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -128,47 +125,51 @@
 
 <nav>
   <a href="index.html" class="logo">Fair<span>Lance</span></a>
-  <div>
-    <a href="login.html" style="color:var(--white)">Log In</a>
-    <a href="employer.html">Post Project</a>
-    <a href="freelancer.html">Freelancer</a>
-    <a href="profile.html">PFI Score</a>
-  </div>
 </nav>
 
 <div class="page">
   <div class="card">
     <div class="badge">
       <span class="badge-dot"></span>
-      Smart login · No passwords · Pick a role
+      No passwords · Just pick your role
     </div>
-    <h1>Welcome to FairLance</h1>
-    <p class="sub">Choose how you want to use the platform. We’ll remember your role and name on this device.</p>
+    <h1>Welcome Back</h1>
+    <p class="sub">Choose your role to access the right dashboard. Your session will be remembered on this device.</p>
 
     <div class="form-group">
-      <label>Your Name</label>
-      <input type="text" id="nameInput" placeholder="e.g. Alex Johnson"/>
+      <label>YOUR NAME</label>
+      <input type="text" id="nameInput" placeholder="e.g. Alex Johnson" autocomplete="name"/>
     </div>
 
     <div class="form-group">
-      <label>Role</label>
-      <div class="role-row">
-        <button type="button" class="role-pill active" id="roleEmployer" onclick="setRole('employer')">Employer</button>
-        <button type="button" class="role-pill" id="roleFreelancer" onclick="setRole('freelancer')">Freelancer</button>
+      <label>I AM A</label>
+      <div class="role-grid">
+        <div class="role-card active" id="cardEmployer" onclick="setRole('employer')">
+          <div class="role-icon">🏢</div>
+          <div class="role-name">Employer</div>
+          <div class="role-desc">Post projects, generate milestones, lock escrow</div>
+        </div>
+        <div class="role-card" id="cardFreelancer" onclick="setRole('freelancer')">
+          <div class="role-icon">💼</div>
+          <div class="role-name">Freelancer</div>
+          <div class="role-desc">Browse projects, submit work, get AI-verified</div>
+        </div>
+      </div>
+      <div class="freelancer-id-wrap" id="freelancerIdWrap">
+        <div style="margin-top:0.75rem;">
+          <label>FREELANCER ID (OPTIONAL)</label>
+          <input type="text" id="freelancerIdInput" placeholder="e.g. FL001"/>
+        </div>
       </div>
     </div>
 
-    <div class="form-group" id="freelancerIdGroup" style="display:none;">
-      <label>Freelancer ID (optional)</label>
-      <input type="text" id="freelancerIdInput" placeholder="e.g. FL001"/>
-    </div>
-
-    <button class="btn-primary" onclick="login()">
-      Continue →
+    <button class="btn-primary" id="continueBtn" onclick="login()">
+      Continue as Employer →
     </button>
 
-    <div class="hint">
-      Tip: Start as an employer, post a project, then open the freelancer dashboard to see the full AI evaluation flow.
+    <div class="divider">what you'll see</div>
+    <div class="hint" id="roleHint">
+      📋 Post projects · 🤖 AI milestone generation · 🔒 Escrow management
     </div>
   </div>
 </div>
@@ -176,45 +177,54 @@
 <script>
   let role = 'employer';
 
-  (function initRoleFromQuery() {
-    const params = new URLSearchParams(window.location.search);
-    const qRole = params.get('role');
-    if (qRole === 'freelancer' || qRole === 'employer') {
-      setRole(qRole);
-    }
+  // Pre-select role from URL query e.g. login.html?role=freelancer
+  (function() {
+    const q = new URLSearchParams(window.location.search).get('role');
+    if (q === 'freelancer' || q === 'employer') setRole(q);
   })();
 
-  function setRole(nextRole) {
-    role = nextRole;
-    document.getElementById('roleEmployer').classList.toggle('active', role === 'employer');
-    document.getElementById('roleFreelancer').classList.toggle('active', role === 'freelancer');
-    document.getElementById('freelancerIdGroup').style.display = role === 'freelancer' ? 'block' : 'none';
+  // Pre-fill name if already logged in
+  (function() {
+    try {
+      const u = JSON.parse(localStorage.getItem('fairlance_user') || '{}');
+      if (u.name) document.getElementById('nameInput').value = u.name;
+      if (u.role) setRole(u.role);
+      if (u.id) document.getElementById('freelancerIdInput').value = u.id || '';
+    } catch(e) {}
+  })();
+
+  function setRole(r) {
+    role = r;
+
+    document.getElementById('cardEmployer').classList.toggle('active', r === 'employer');
+    document.getElementById('cardFreelancer').classList.toggle('active', r === 'freelancer');
+
+    const idWrap = document.getElementById('freelancerIdWrap');
+    idWrap.classList.toggle('show', r === 'freelancer');
+
+    const btn = document.getElementById('continueBtn');
+    const hint = document.getElementById('roleHint');
+
+    if (r === 'employer') {
+      btn.textContent = 'Continue as Employer →';
+      hint.textContent = '📋 Post projects · 🤖 AI milestone generation · 🔒 Escrow management';
+    } else {
+      btn.textContent = 'Continue as Freelancer →';
+      hint.textContent = '🔍 Browse projects · ✅ Submit work · 💰 Get AI-verified payments';
+    }
   }
 
   function login() {
     const name = document.getElementById('nameInput').value.trim() || (role === 'employer' ? 'Employer' : 'Freelancer');
     const freelancerId = document.getElementById('freelancerIdInput').value.trim();
 
-    const user = {
-      name,
-      role,
-      id: role === 'freelancer' ? freelancerId || null : null,
-    };
+    const user = { name, role, id: role === 'freelancer' ? (freelancerId || null) : null };
 
-    try {
-      localStorage.setItem('fairlance_user', JSON.stringify(user));
-    } catch (e) {
-      console.warn('Could not persist login', e);
-    }
+    try { localStorage.setItem('fairlance_user', JSON.stringify(user)); } catch(e) {}
 
-    if (role === 'employer') {
-      window.location.href = 'employer.html';
-    } else {
-      window.location.href = 'freelancer.html';
-    }
+    window.location.href = role === 'employer' ? 'employer.html' : 'freelancer.html';
   }
 </script>
 
 </body>
 </html>
-
