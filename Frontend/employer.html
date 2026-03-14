@@ -46,7 +46,6 @@
 
   .main { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: calc(100vh - 140px); }
 
-  /* LEFT: FORM */
   .form-side { padding: 3rem 4rem; border-right: 1px solid var(--border); }
   .form-side h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 2rem; }
 
@@ -135,7 +134,6 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* RIGHT: RESULTS */
   .results-side { padding: 3rem 4rem; background: var(--surface); }
   .results-side h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 2rem; }
 
@@ -237,7 +235,6 @@
   <div>
     <a href="login.html" style="color:var(--white)">Home</a>
     <a href="employer.html" style="color:var(--white)">Post Project</a>
-    
   </div>
 </nav>
 
@@ -248,7 +245,6 @@
 
 <div class="main">
 
-  <!-- FORM SIDE -->
   <div class="form-side">
     <h2>Project Details</h2>
 
@@ -286,7 +282,6 @@
     </p>
   </div>
 
-  <!-- RESULTS SIDE -->
   <div class="results-side">
     <h2>AI Generated Milestones</h2>
 
@@ -324,7 +319,6 @@
       return;
     }
 
-    // Show loading
     document.getElementById('spinner').style.display = 'block';
     document.getElementById('btnText').textContent = 'Analyzing project...';
     document.getElementById('submitBtn').disabled = true;
@@ -353,7 +347,6 @@
       document.getElementById('postBtn').disabled = false;
 
     } catch (err) {
-      // Fallback demo data if backend/AI not ready
       console.warn('Backend not reachable or AI failed, using demo data:', err);
       const demoMilestones = [
         { milestone_id:1, title:"Plan & Design", description:"Create wireframes and get client approval", completion_criteria:"Client approves wireframes and color scheme in writing", payment_percentage:20, deadline_days:3 },
@@ -370,7 +363,6 @@
       document.getElementById('postBtn').disabled = false;
     }
 
-    // Reset button
     document.getElementById('spinner').style.display = 'none';
     document.getElementById('btnText').textContent = '🤖 Generate AI Milestones';
     document.getElementById('submitBtn').disabled = false;
@@ -458,7 +450,6 @@
       container.appendChild(card);
     });
 
-    // Total escrow
     const total = document.createElement('div');
     total.className = 'total-escrow';
     total.innerHTML = `
