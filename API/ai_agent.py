@@ -5,9 +5,7 @@ from groq import Groq
 # CONFIGURATION
 # ============================================================
 
-client = Groq(api_key="
-# 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
-")
+client = Groq(api_key="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")
 
 MODEL = "llama-3.3-70b-versatile"
 
