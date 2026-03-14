@@ -6,413 +6,293 @@
 <title>FairLance — Freelancer Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --bg: #080d1a; --surface: #0f172a; --card: #131f35;
-    --blue: #3b82f6; --blue-glow: #3b82f640; --cyan: #06b6d4;
-    --white: #f0f6ff; --muted: #64748b; --border: #1e2d45;
-    --green: #10b981; --yellow: #f59e0b; --red: #ef4444;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--white); font-family:'DM Sans',sans-serif; min-height:100vh; }
+:root {
+--bg:#080d1a;--surface:#0f172a;--card:#131f35;
+--blue:#3b82f6;--blue-glow:#3b82f640;--cyan:#06b6d4;
+--white:#f0f6ff;--muted:#64748b;--border:#1e2d45;
+--green:#10b981;--yellow:#f59e0b;--red:#ef4444;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;}
 
-  nav {
-    display:flex; justify-content:space-between; align-items:center;
-    padding:1.2rem 4rem; border-bottom:1px solid var(--border);
-    background:#080d1af0; backdrop-filter:blur(16px);
-    position:sticky; top:0; z-index:100;
-  }
-  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; text-decoration:none; color:var(--white); letter-spacing:-0.02em; }
-  .logo span { color:var(--blue); }
-  .nav-links { display:flex; align-items:center; gap:0.25rem; }
-  .nav-links a { color:var(--muted); text-decoration:none; font-size:0.88rem; padding:0.4rem 0.9rem; border-radius:8px; transition:all 0.2s; }
-  .nav-links a:hover { color:var(--white); background:#ffffff08; }
-  .nav-links a.active { color:var(--blue); background:var(--blue-glow); }
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;border-bottom:1px solid var(--border);background:#080d1af0;backdrop-filter:blur(16px);position:sticky;top:0;z-index:100;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;text-decoration:none;color:var(--white);letter-spacing:-0.02em;}
+.logo span{color:var(--blue);}
+.nav-links{display:flex;align-items:center;gap:0.25rem;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.88rem;padding:0.4rem 0.9rem;border-radius:8px;transition:all 0.2s;}
+.nav-links a:hover{color:var(--white);background:#ffffff08;}
+.nav-links a.active{color:var(--blue);background:var(--blue-glow);}
 
-  .page-header {
-    background:var(--surface); border-bottom:1px solid var(--border);
-    padding:2.5rem 4rem; position:relative; overflow:hidden;
-  }
-  .page-header::before {
-    content:''; position:absolute; top:-60px; right:-60px;
-    width:300px; height:300px;
-    background:radial-gradient(circle, #3b82f610 0%, transparent 70%);
-    pointer-events:none;
-  }
-  .header-label { color:var(--blue); font-size:0.75rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.4rem; }
-  .header-title { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; letter-spacing:-0.02em; }
+.page-header{background:var(--surface);border-bottom:1px solid var(--border);padding:2.5rem 4rem;position:relative;overflow:hidden;}
+.header-label{color:var(--blue);font-size:0.75rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.4rem;}
+.header-title{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-0.02em;}
 
-  .freelancer-card {
-    display:flex; align-items:center; gap:1rem;
-    background:var(--card); border:1px solid var(--border);
-    border-radius:14px; padding:1rem 1.25rem;
-    margin-top:1.5rem; width:fit-content;
-  }
-  .avatar {
-    width:42px; height:42px; border-radius:50%;
-    background:linear-gradient(135deg, var(--blue), var(--cyan));
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; flex-shrink:0;
-  }
-  .freelancer-name { font-weight:600; font-size:0.95rem; }
-  .freelancer-id { color:var(--muted); font-size:0.82rem; margin-top:0.1rem; }
-  .pfi-chip { background:var(--blue-glow); border:1px solid #3b82f650; color:var(--blue); padding:0.3rem 0.85rem; border-radius:999px; font-size:0.78rem; font-weight:600; margin-left:0.5rem; }
+.freelancer-card{display:flex;align-items:center;gap:1rem;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.25rem;margin-top:1.5rem;width:fit-content;}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;flex-shrink:0;}
+.freelancer-name{font-weight:600;font-size:0.95rem;}
+.freelancer-id{color:var(--muted);font-size:0.82rem;margin-top:0.1rem;}
+.pfi-chip{background:var(--blue-glow);border:1px solid #3b82f650;color:var(--blue);padding:0.3rem 0.85rem;border-radius:999px;font-size:0.78rem;font-weight:600;margin-left:0.5rem;}
 
-  .main { max-width:1000px; margin:0 auto; padding:2.5rem 4rem; }
+.main{max-width:1000px;margin:0 auto;padding:2.5rem 4rem;}
 
-  .loading-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:5rem 2rem; gap:1rem; color:var(--muted); }
-  .loading-spinner { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--blue); border-radius:50%; animation:spin 0.8s linear infinite; }
-  @keyframes spin { to { transform:rotate(360deg); } }
+.loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;gap:1rem;color:var(--muted);}
+.loading-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-  .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:5rem 2rem; text-align:center; gap:1rem; color:var(--muted); }
-  .empty-icon { width:80px; height:80px; border-radius:50%; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:2rem; margin-bottom:0.5rem; }
-  .empty-state h3 { font-family:'Syne',sans-serif; color:var(--white); font-size:1.1rem; }
-  .empty-state p { font-size:0.88rem; max-width:300px; line-height:1.6; }
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;text-align:center;gap:1rem;color:var(--muted);}
+.empty-icon{width:80px;height:80px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:0.5rem;}
+.empty-state h3{font-family:'Syne',sans-serif;color:var(--white);font-size:1.1rem;}
+.empty-state p{font-size:0.88rem;max-width:300px;line-height:1.6;}
 
-  .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; }
-  .section-title { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; display:flex; align-items:center; gap:0.6rem; }
-  .count-badge { background:var(--blue-glow); color:var(--blue); padding:0.15rem 0.6rem; border-radius:999px; font-size:0.75rem; font-weight:600; }
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+.section-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:0.6rem;}
+.count-badge{background:var(--blue-glow);color:var(--blue);padding:0.15rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:600;}
 
-  .project-card { background:var(--card); border:1px solid var(--border); border-radius:16px; margin-bottom:1rem; overflow:hidden; transition:all 0.2s; animation:fadeUp 0.4s ease both; }
-  .project-card:hover { border-color:#3b82f650; }
-  @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:1rem;overflow:hidden;transition:all 0.2s;}
+.project-card:hover{border-color:#3b82f650;}
 
-  .project-main { display:flex; justify-content:space-between; align-items:center; padding:1.4rem 1.5rem; cursor:pointer; gap:1rem; }
-  .project-left { flex:1; min-width:0; }
-  .project-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:0.3rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .project-desc { color:var(--muted); font-size:0.84rem; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-  .project-right { display:flex; align-items:center; gap:1rem; flex-shrink:0; }
-  .budget-amount { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; color:var(--blue); }
-  .budget-label { color:var(--muted); font-size:0.72rem; margin-top:0.1rem; text-align:right; }
+.project-main{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 1.5rem;cursor:pointer;gap:1rem;}
+.project-left{flex:1;min-width:0;}
+.project-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.project-desc{color:var(--muted);font-size:0.84rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 
-  .expand-btn { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:0.5rem 1rem; border-radius:8px; font-size:0.82rem; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; white-space:nowrap; display:flex; align-items:center; gap:0.4rem; }
-  .expand-btn:hover { border-color:var(--blue); color:var(--blue); }
-  .expand-btn.active { background:var(--blue-glow); border-color:var(--blue); color:var(--blue); }
-  .chevron { transition:transform 0.3s; display:inline-block; }
-  .chevron.open { transform:rotate(180deg); }
+.project-right{display:flex;align-items:center;gap:1rem;flex-shrink:0;}
+.budget-amount{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--blue);}
+.budget-label{color:var(--muted);font-size:0.72rem;margin-top:0.1rem;text-align:right;}
 
-  .milestones-panel { border-top:1px solid var(--border); background:var(--surface); max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
-  .milestones-panel.open { max-height:3000px; }
-  .milestones-inner { padding:1.5rem; }
-  .milestones-grid { display:flex; flex-direction:column; gap:1rem; }
+.expand-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:0.4rem;}
+.expand-btn:hover{border-color:var(--blue);color:var(--blue);}
+.expand-btn.active{background:var(--blue-glow);border-color:var(--blue);color:var(--blue);}
 
-  .milestone-item { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:border-color 0.2s; position:relative; }
-  .milestone-item::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(180deg, var(--blue), var(--cyan)); }
-  .milestone-item:hover { border-color:#3b82f640; }
+.milestones-panel{border-top:1px solid var(--border);background:var(--surface);max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
+.milestones-panel.open{max-height:3000px;}
+.milestones-inner{padding:1.5rem;}
+.milestones-grid{display:flex;flex-direction:column;gap:1rem;}
 
-  .milestone-header-row { display:flex; justify-content:space-between; align-items:center; padding:1.1rem 1.1rem 1.1rem 1.4rem; border-bottom:1px solid var(--border); gap:0.75rem; flex-wrap:wrap; }
-  .milestone-num { background:var(--blue-glow); color:var(--blue); width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0; }
-  .milestone-title-text { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; flex:1; }
-  .milestone-pay-badge { background:#10b98115; color:var(--green); border:1px solid #10b98130; padding:0.25rem 0.75rem; border-radius:999px; font-size:0.75rem; font-weight:600; white-space:nowrap; }
-  .milestone-status { padding:0.25rem 0.75rem; border-radius:999px; font-size:0.72rem; font-weight:600; }
-  .status-active { background:#f59e0b15; color:var(--yellow); }
-  .status-pending { background:#64748b15; color:var(--muted); }
+.milestone-item{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;position:relative;}
+.milestone-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--blue),var(--cyan));}
 
-  .milestone-meta-row { display:flex; gap:0; border-bottom:1px solid var(--border); }
-  .meta-cell { flex:1; padding:0.75rem 1rem; text-align:center; border-right:1px solid var(--border); }
-  .meta-cell:last-child { border-right:none; }
-  .meta-val { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; color:var(--blue); }
-  .meta-lbl { color:var(--muted); font-size:0.7rem; margin-top:0.15rem; }
+.milestone-header-row{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.1rem 1.1rem 1.4rem;border-bottom:1px solid var(--border);gap:0.75rem;flex-wrap:wrap;}
+.milestone-num{background:var(--blue-glow);color:var(--blue);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;}
+.milestone-title-text{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;flex:1;}
 
-  .milestone-body { padding:1.2rem 1.4rem; }
-  .criteria-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:0.9rem 1.1rem; margin-bottom:1rem; font-size:0.84rem; color:var(--muted); line-height:1.65; }
-  .criteria-label { color:var(--white); font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.35rem; display:flex; align-items:center; gap:0.4rem; }
-  .criteria-label::before { content:'✓'; color:var(--green); }
+.criteria-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:1rem;font-size:0.84rem;color:var(--muted);line-height:1.65;}
 
-  label { display:block; font-size:0.82rem; color:var(--muted); margin-bottom:0.4rem; font-weight:500; }
-  textarea { width:100%; background:var(--bg); border:1px solid var(--border); color:var(--white); padding:0.8rem 1rem; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.88rem; transition:border-color 0.2s, box-shadow 0.2s; outline:none; resize:vertical; min-height:90px; line-height:1.6; }
-  textarea:focus { border-color:var(--blue); box-shadow:0 0 0 3px #3b82f615; }
+textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:0.8rem 1rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;resize:vertical;min-height:90px;line-height:1.6;}
 
-  .submit-row { display:flex; gap:0.75rem; margin-top:0.85rem; align-items:center; flex-wrap:wrap; }
-  .btn-submit { background:var(--blue); color:white; border:none; padding:0.7rem 1.4rem; border-radius:10px; font-size:0.88rem; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; display:flex; align-items:center; gap:0.5rem; box-shadow:0 0 20px #3b82f630; }
-  .btn-submit:hover { background:#2563eb; transform:translateY(-1px); box-shadow:0 0 28px #3b82f650; }
-  .btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
-  .btn-spinner { width:15px; height:15px; border:2px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; display:none; }
-  .ai-note { color:var(--muted); font-size:0.78rem; display:flex; align-items:center; gap:0.35rem; }
+.submit-row{display:flex;gap:0.75rem;margin-top:0.85rem;align-items:center;flex-wrap:wrap;}
+.btn-submit{background:var(--blue);color:white;border:none;padding:0.7rem 1.4rem;border-radius:10px;font-size:0.88rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:0.5rem;}
+.btn-submit:hover{background:#2563eb;}
 
-  .verdict-card { border-radius:12px; padding:1.25rem 1.4rem; margin-top:1rem; border:1px solid; display:none; animation:fadeUp 0.35s ease; }
-  .verdict-completed { background:#071a10; border-color:#10b98150; }
-  .verdict-partial   { background:#1a120a; border-color:#f59e0b50; }
-  .verdict-failed    { background:#1a0a0a; border-color:#ef444450; }
-
-  .verdict-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.85rem; }
-  .verdict-pill { padding:0.35rem 1rem; border-radius:999px; font-weight:700; font-size:0.82rem; letter-spacing:0.05em; }
-  .pill-completed { background:#10b98120; color:var(--green); }
-  .pill-partial   { background:#f59e0b20; color:var(--yellow); }
-  .pill-failed    { background:#ef444420; color:var(--red); }
-  .verdict-score { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; }
-  .score-completed { color:var(--green); }
-  .score-partial   { color:var(--yellow); }
-  .score-failed    { color:var(--red); }
-
-  .verdict-feedback { color:#94a3b8; font-size:0.87rem; line-height:1.7; margin-bottom:0.85rem; padding-bottom:0.85rem; border-bottom:1px solid #ffffff10; }
-  .payment-line { display:flex; align-items:center; gap:0.5rem; font-size:0.88rem; font-weight:500; }
-  .pay-released { color:var(--green); }
-  .pay-held     { color:var(--yellow); }
-  .pay-locked   { color:var(--red); }
-
-  .refresh-btn { background:none; border:1px solid var(--border); color:var(--muted); padding:0.4rem 0.9rem; border-radius:8px; font-size:0.8rem; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
-  .refresh-btn:hover { border-color:var(--blue); color:var(--blue); }
-
-  @media (max-width:768px) {
-    nav { padding:1rem 1.5rem; }
-    .page-header, .main { padding-left:1.5rem; padding-right:1.5rem; }
-    .project-main { flex-direction:column; align-items:flex-start; }
-    .project-right { width:100%; justify-content:space-between; }
-    .milestone-meta-row { flex-wrap:wrap; }
-  }
+.verdict-card{border-radius:12px;padding:1.25rem 1.4rem;margin-top:1rem;border:1px solid;display:none;}
+.verdict-completed{background:#071a10;border-color:#10b98150;}
+.verdict-partial{background:#1a120a;border-color:#f59e0b50;}
+.verdict-failed{background:#1a0a0a;border-color:#ef444450;}
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="logo">Fair<span>Lance</span></a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="freelancer.html" class="active">Freelancer</a>
-    <a href="profile.html">PFI Score</a>
-  </div>
+<a href="index.html" class="logo">Fair<span>Lance</span></a>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="freelancer.html" class="active">Freelancer</a>
+<a href="profile.html">PFI Score</a>
+</div>
 </nav>
 
 <div class="page-header">
-  <div class="header-label">Freelancer Dashboard</div>
-  <h1 class="header-title">Available Projects</h1>
-  <div class="freelancer-card">
-    <div class="avatar" id="freelancerAvatar">FR</div>
-    <div>
-      <div class="freelancer-name" id="freelancerName">Freelancer</div>
-      <div class="freelancer-id" id="freelancerId">Browsing available projects</div>
-    </div>
-    <div class="pfi-chip" id="pfiChip">⭐ PFI Score</div>
-  </div>
+<div class="header-label">Freelancer Dashboard</div>
+<h1 class="header-title">Available Projects</h1>
+<div class="freelancer-card">
+<div class="avatar" id="freelancerAvatar">FR</div>
+<div>
+<div class="freelancer-name" id="freelancerName">Freelancer</div>
+<div class="freelancer-id" id="freelancerId">Browsing available projects</div>
+</div>
+<div class="pfi-chip" id="pfiChip">⭐ PFI Score</div>
+</div>
 </div>
 
 <div class="main">
-  <div class="section-header">
-    <div class="section-title">
-      Open Projects
-      <span class="count-badge" id="projectCount">0</span>
-    </div>
-    <button class="refresh-btn" onclick="loadProjects()">↺ Refresh</button>
-  </div>
-  <div id="projectsContainer">
-    <div class="loading-state">
-      <div class="loading-spinner"></div>
-      <span>Loading projects...</span>
-    </div>
-  </div>
+<div class="section-header">
+<div class="section-title">
+Open Projects
+<span class="count-badge" id="projectCount">0</span>
+</div>
+<button class="refresh-btn" onclick="loadProjects()">↺ Refresh</button>
+</div>
+
+<div id="projectsContainer">
+<div class="loading-state">
+<div class="loading-spinner"></div>
+<span>Loading projects...</span>
+</div>
+</div>
 </div>
 
 <script>
-  const API = 'http://127.0.0.1:8000';
-  let projects = [];
-  const projectBudgetMap = {};
-  const expandedProjects = new Set();
+const API='http://127.0.0.1:8000';
+let projects=[];
+const projectBudgetMap={};
+const expandedProjects=new Set();
 
-  function hydrateFreelancerFromLogin() {
-    try {
-      const raw = localStorage.getItem('fairlance_user');
-      if (!raw) return;
-      const user = JSON.parse(raw);
-      if (user.role !== 'freelancer') return;
-      const initials = (user.name || 'FR').split(' ').map(p => p[0]).join('').slice(0,2).toUpperCase();
-      document.getElementById('freelancerAvatar').textContent = initials;
-      document.getElementById('freelancerName').textContent = user.name || 'Freelancer';
-      document.getElementById('freelancerId').textContent = user.id ? `ID: ${user.id}` : 'Freelancer';
-    } catch(e) {}
-  }
-
-  async function loadProjects() {
-    document.getElementById('projectsContainer').innerHTML = `<div class="loading-state"><div class="loading-spinner"></div><span>Loading projects...</span></div>`;
-    document.getElementById('projectCount').textContent = '0';
-    try {
-      const res = await fetch(`${API}/projects`);
-      projects = await res.json();
-      renderProjects();
-    } catch(err) {
-  document.getElementById('projectsContainer').innerHTML = `
-    <div class="empty-state">
-      <div class="empty-icon">⚠️</div>
-      <h3>Could not connect to server</h3>
-      <p>Make sure the backend is running at http://127.0.0.1:8000</p>
-    </div>`;
+async function loadProjects(){
+document.getElementById('projectsContainer').innerHTML=`<div class="loading-state"><div class="loading-spinner"></div><span>Loading projects...</span></div>`;
+document.getElementById('projectCount').textContent='0';
+try{
+const res=await fetch(`${API}/projects`);
+projects=await res.json();
+renderProjects();
+}catch(err){
+document.getElementById('projectsContainer').innerHTML=`<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Could not connect to server</h3><p>Make sure the backend is running at http://127.0.0.1:8000</p></div>`;
 }
-  }
+}
 
-  function renderProjects() {
-    const container = document.getElementById('projectsContainer');
-    container.innerHTML = '';
-    if (!projects.length) {
-      container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><h3>No projects yet</h3><p>Ask an employer to post a project from the employer dashboard. It will appear here instantly.</p></div>`;
-      document.getElementById('projectCount').textContent = '0';
-      return;
-    }
-    document.getElementById('projectCount').textContent = projects.length;
-    projects.forEach((p, i) => {
-      projectBudgetMap[p.id] = p.budget;
-      const card = document.createElement('div');
-      card.className = 'project-card';
-      card.style.animationDelay = `${i * 0.07}s`;
-      card.innerHTML = `
-        <div class="project-main" onclick="toggleProject(${p.id})">
-          <div class="project-left">
-            <div class="project-title">${p.title}</div>
-            <div class="project-desc">${p.description}</div>
-          </div>
-          <div class="project-right">
-            <div>
-              <div class="budget-amount">$${p.budget.toLocaleString()}</div>
-              <div class="budget-label">Total Budget</div>
-            </div>
-            <button class="expand-btn" id="expand-btn-${p.id}" onclick="event.stopPropagation(); toggleProject(${p.id})">
-              View Milestones <span class="chevron" id="chevron-${p.id}">▾</span>
-            </button>
-          </div>
-        </div>
-        <div class="milestones-panel" id="panel-${p.id}">
-          <div class="milestones-inner">
-            <div id="milestones-content-${p.id}">
-              <div class="loading-state" style="padding:2rem;"><div class="loading-spinner"></div><span>Loading milestones...</span></div>
-            </div>
-          </div>
-        </div>`;
-      container.appendChild(card);
-    });
-  }
+function renderProjects(){
+const container=document.getElementById('projectsContainer');
+container.innerHTML='';
+if(!projects.length){
+container.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><h3>No projects yet</h3><p>Ask an employer to post a project from the employer dashboard.</p></div>`;
+return;
+}
+document.getElementById('projectCount').textContent=projects.length;
+projects.forEach((p,i)=>{
+projectBudgetMap[p.id]=p.budget;
+const card=document.createElement('div');
+card.className='project-card';
+card.innerHTML=`
+<div class="project-main" onclick="toggleProject(${p.id})">
+<div class="project-left">
+<div class="project-title">${p.title}</div>
+<div class="project-desc">${p.description}</div>
+</div>
+<div class="project-right">
+<div>
+<div class="budget-amount">$${p.budget.toLocaleString()}</div>
+<div class="budget-label">Total Budget</div>
+</div>
+<button class="expand-btn" id="expand-btn-${p.id}" onclick="event.stopPropagation();toggleProject(${p.id})">
+View Milestones ▾
+</button>
+</div>
+</div>
+<div class="milestones-panel" id="panel-${p.id}">
+<div class="milestones-inner">
+<div id="milestones-content-${p.id}">
+<div class="loading-state"><div class="loading-spinner"></div></div>
+</div>
+</div>
+</div>`;
+container.appendChild(card);
+});
+}
 
-  async function toggleProject(projectId) {
-    const panel = document.getElementById(`panel-${projectId}`);
-    const btn = document.getElementById(`expand-btn-${projectId}`);
-    const chevron = document.getElementById(`chevron-${projectId}`);
-    if (expandedProjects.has(projectId)) {
-      panel.classList.remove('open'); btn.classList.remove('active'); chevron.classList.remove('open');
-      expandedProjects.delete(projectId); return;
-    }
-    panel.classList.add('open'); btn.classList.add('active'); chevron.classList.add('open');
-    expandedProjects.add(projectId);
-    try {
-      const res = await fetch(`${API}/projects/${projectId}/milestones`);
-      const milestones = await res.json();
-      renderMilestones(projectId, milestones);
-    } catch(err) {
-      const demo = [
-        { milestone_id:1, title:"Plan & Design", description:"Wireframes and client-approved layout.", completion_criteria:"Client approves all wireframes and visual direction in writing.", payment_percentage:20, deadline_days:3 },
-        { milestone_id:2, title:"Core Development", description:"Build all pages with responsive layout.", completion_criteria:"All pages implemented, navigation working, content populated.", payment_percentage:50, deadline_days:7 },
-        { milestone_id:3, title:"QA & Launch", description:"Final QA and deployment.", completion_criteria:"Site deployed, form works, no critical bugs.", payment_percentage:30, deadline_days:10 },
-      ];
-      document.getElementById(`milestones-content-${projectId}`).innerHTML = 
-    `<div class="center-msg">⚠️ Could not load milestones. Check backend connection.</div>`;
-      renderMilestones(projectId, demo);
-    }
-  }
+async function toggleProject(projectId){
+const panel=document.getElementById(`panel-${projectId}`);
+if(expandedProjects.has(projectId)){
+panel.classList.remove('open');
+expandedProjects.delete(projectId);
+return;
+}
+panel.classList.add('open');
+expandedProjects.add(projectId);
 
-  function renderMilestones(projectId, milestones) {
-    const content = document.getElementById(`milestones-content-${projectId}`);
-    const budget = projectBudgetMap[projectId] || 0;
-    if (!milestones.length) {
-      content.innerHTML = `<div class="empty-state" style="padding:2rem;"><p>No milestones found for this project.</p></div>`;
-      return;
-    }
-    let html = `<div class="milestones-grid">`;
-    milestones.forEach((m, idx) => {
-      const payment = budget && m.payment_percentage ? (budget * m.payment_percentage / 100).toFixed(2) : null;
-      html += `
-        <div class="milestone-item">
-          <div class="milestone-header-row">
-            <div class="milestone-num">${m.milestone_id}</div>
-            <div class="milestone-title-text">${m.title}</div>
-            ${payment ? `<div class="milestone-pay-badge">💰 $${payment}</div>` : ''}
-            <div class="milestone-status ${idx === 0 ? 'status-active' : 'status-pending'}">${idx === 0 ? '● Active' : '○ Pending'}</div>
-          </div>
-          <div class="milestone-meta-row">
-            <div class="meta-cell"><div class="meta-val">Day ${m.deadline_days}</div><div class="meta-lbl">Deadline</div></div>
-            <div class="meta-cell"><div class="meta-val">${payment ? '$'+payment : '—'}</div><div class="meta-lbl">Payment</div></div>
-            <div class="meta-cell"><div class="meta-val">${m.payment_percentage || 0}%</div><div class="meta-lbl">Of Budget</div></div>
-            <div class="meta-cell"><div class="meta-val">#${projectId}</div><div class="meta-lbl">Project ID</div></div>
-          </div>
-          <div class="milestone-body">
-            <div class="criteria-box">
-              <div class="criteria-label">Completion Criteria</div>
-              ${m.completion_criteria}
-            </div>
-            <label>Describe your completed work or paste a link</label>
-            <textarea id="work-${projectId}-${m.milestone_id}" placeholder="Describe what you built, share GitHub links, hosted URLs, or explain how your work meets each completion criteria point..."></textarea>
-            <div class="submit-row">
-              <button class="btn-submit" id="btn-${projectId}-${m.milestone_id}" onclick="submitWork(${projectId}, ${m.milestone_id}, ${payment || 0})">
-                <div class="btn-spinner" id="spin-${projectId}-${m.milestone_id}"></div>
-                <span id="btnText-${projectId}-${m.milestone_id}">Submit for AI Evaluation →</span>
-              </button>
-              <span class="ai-note">🤖 AI evaluates in seconds</span>
-            </div>
-            <div class="verdict-card" id="verdict-${projectId}-${m.milestone_id}"></div>
-          </div>
-        </div>`;
-    });
-    html += `</div>`;
-    content.innerHTML = html;
-  }
+try{
+const res=await fetch(`${API}/projects/${projectId}/milestones`);
+const milestones=await res.json();
+renderMilestones(projectId,milestones);
+}catch(err){
+document.getElementById(`milestones-content-${projectId}`).innerHTML=`<div class="empty-state"><p>Could not load milestones</p></div>`;
+}
+}
 
-  async function submitWork(projectId, milestoneId, paymentAmount) {
-    const work = document.getElementById(`work-${projectId}-${milestoneId}`).value.trim();
-    if (!work) { alert('Please describe your completed work first.'); return; }
-    const btn = document.getElementById(`btn-${projectId}-${milestoneId}`);
-    const spin = document.getElementById(`spin-${projectId}-${milestoneId}`);
-    const btnText = document.getElementById(`btnText-${projectId}-${milestoneId}`);
-    spin.style.display = 'block'; btnText.textContent = 'AI Evaluating...'; btn.disabled = true;
-    try {
-      const res = await fetch(`${API}/verify/work`, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ project_id:projectId, milestone_id:milestoneId, link:work })
-      });
-      const data = await res.json();
-      displayVerdict(projectId, milestoneId, paymentAmount, {
-        verdict: data.status,
-        score: Math.round((data.quality_score || 0.75) * 100),
-        feedback: data.feedback || "Work evaluated by AI.",
-        release_payment: data.payment_released,
-        partial_payment_percentage: data.partial_payment_percentage || 0
-      });
-    } catch(err) {
-      const score = Math.floor(Math.random() * 35) + 55;
-      const verdict = score >= 80 ? 'completed' : score >= 40 ? 'partial' : 'failed';
-      displayVerdict(projectId, milestoneId, paymentAmount, {
-        verdict, score,
-        feedback: verdict === 'completed' ? "All criteria met. Work quality is excellent. Payment released immediately."
-          : verdict === 'partial' ? "Good progress but some requirements are missing. Address the feedback and resubmit for full payment."
-          : "Submission doesn't meet the required criteria. Review the completion criteria and resubmit.",
-        release_payment: verdict === 'completed',
-        partial_payment_percentage: verdict === 'partial' ? 60 : 0
-      });
-    }
-    spin.style.display = 'none'; btnText.textContent = 'Resubmit →'; btn.disabled = false;
-  }
+function renderMilestones(projectId,milestones){
+const content=document.getElementById(`milestones-content-${projectId}`);
+const budget=projectBudgetMap[projectId]||0;
 
-  function displayVerdict(projectId, milestoneId, paymentAmount, data) {
-    const card = document.getElementById(`verdict-${projectId}-${milestoneId}`);
-    const icon = data.verdict === 'completed' ? '✅' : data.verdict === 'partial' ? '⚠️' : '❌';
-    const payment = parseFloat(paymentAmount) || 0;
-    let paymentHtml = '';
-    if (data.release_payment) {
-      paymentHtml = `<div class="payment-line pay-released">💰 $${payment.toFixed(2)} released to your wallet</div>`;
-    } else if (data.verdict === 'partial') {
-      const partial = (payment * (data.partial_payment_percentage || 0) / 100).toFixed(2);
-      const held = (payment - parseFloat(partial)).toFixed(2);
-      paymentHtml = `<div class="payment-line pay-held">⏳ $${partial} partial payment pending · $${held} held in escrow</div>`;
-    } else {
-      paymentHtml = `<div class="payment-line pay-locked">🔒 Payment held · Fix issues and resubmit to unlock</div>`;
-    }
-    card.className = `verdict-card verdict-${data.verdict}`;
-    card.style.display = 'block';
-    card.innerHTML = `
-      <div class="verdict-top">
-        <div class="verdict-pill pill-${data.verdict}">${icon} ${data.verdict.toUpperCase()}</div>
-        <div class="verdict-score score-${data.verdict}">${data.score}<span style="font-size:1rem;opacity:0.5;font-weight:400">/100</span></div>
-      </div>
-      <div class="verdict-feedback">${data.feedback}</div>
-      ${paymentHtml}`;
-    card.scrollIntoView({ behavior:'smooth', block:'nearest' });
-  }
+if(!milestones.length){
+content.innerHTML=`<div class="empty-state"><p>No milestones found.</p></div>`;
+return;
+}
 
-  window.onload = () => { hydrateFreelancerFromLogin(); loadProjects(); };
+let html=`<div class="milestones-grid">`;
+
+milestones.forEach(m=>{
+const payment=(budget*m.payment_percentage/100).toFixed(2);
+
+html+=`
+<div class="milestone-item">
+<div class="milestone-header-row">
+<div class="milestone-num">${m.milestone_id}</div>
+<div class="milestone-title-text">${m.title}</div>
+<div>$${payment}</div>
+</div>
+<div class="criteria-box">${m.completion_criteria}</div>
+
+<textarea id="submission-${projectId}-${m.milestone_id}" placeholder="Describe your completed work or paste a link"></textarea>
+
+<div class="submit-row">
+<button class="btn-submit" onclick="submitWork(${projectId},${m.milestone_id})">
+Submit Work
+</button>
+</div>
+
+<div class="verdict-card" id="verdict-${projectId}-${m.milestone_id}"></div>
+
+</div>`;
+});
+
+html+=`</div>`;
+content.innerHTML=html;
+}
+
+async function submitWork(projectId,milestoneId){
+
+const text=document.getElementById(`submission-${projectId}-${milestoneId}`).value;
+
+if(!text){
+alert("Please describe your work or paste a link.");
+return;
+}
+
+try{
+
+const res=await fetch(`${API}/verify/work`,{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+project_id:projectId,
+milestone_id:milestoneId,
+link:text
+})
+});
+
+const data=await res.json();
+
+const verdictBox=document.getElementById(`verdict-${projectId}-${milestoneId}`);
+
+let cls='';
+if(data.status==='completed')cls='verdict-completed';
+else if(data.status==='partial')cls='verdict-partial';
+else cls='verdict-failed';
+
+verdictBox.className=`verdict-card ${cls}`;
+verdictBox.style.display='block';
+
+verdictBox.innerHTML=`
+<div><strong>Status:</strong> ${data.status}</div>
+<div><strong>Score:</strong> ${(data.quality_score*100).toFixed(0)}%</div>
+<div style="margin-top:6px">${data.feedback}</div>
+`;
+
+}catch(err){
+alert("Verification failed. Backend may not be running.");
+}
+}
+
+loadProjects();
 </script>
+
 </body>
 </html>
