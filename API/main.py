@@ -10,17 +10,10 @@ from models import Project as ProjectModel, Submission as SubmissionModel, Miles
 
 app = FastAPI()
 
-
-# Create tables on startup (simple approach for this small project)
 Base.metadata.create_all(bind=engine)
 
 
 def seed_demo_data():
-    """
-    Seed a couple of demo projects + milestones so the freelancer
-    dashboard has something to show even before any employer posts.
-    Only runs when there are zero projects.
-    """
     db = SessionLocal()
     try:
         if db.query(ProjectModel).count() > 0:
@@ -149,7 +142,6 @@ def seed_demo_data():
         db.close()
 
 
-# Seed initial demo data if database is empty
 seed_demo_data()
 
 
@@ -183,9 +175,6 @@ class Submission(BaseModel):
 
 @app.post("/project/create")
 def create_project(project: Project, db: Session = Depends(get_db)):
-    """
-    Create a project and persist it to the SQLite database.
-    """
     db_project = ProjectModel(
         title=project.title,
         description=project.description,
@@ -205,12 +194,9 @@ def create_project(project: Project, db: Session = Depends(get_db)):
         },
     }
 
+
 @app.post("/project/create-with-milestones")
 def create_project_with_milestones(project: Project, db: Session = Depends(get_db)):
-    """
-    Create a project, have the AI generate milestones, persist everything,
-    and return the full project payload including milestones.
-    """
     db_project = ProjectModel(
         title=project.title,
         description=project.description,
@@ -250,13 +236,9 @@ def create_project_with_milestones(project: Project, db: Session = Depends(get_d
         "milestones": milestones_payload,
     }
 
+
 @app.post("/project/create-from-milestones")
 def create_project_from_milestones(payload: dict, db: Session = Depends(get_db)):
-    """
-    Create a project and persist a provided list of milestones (already generated
-    by AI or using a fallback). This is used when the frontend first previews
-    milestones, then the employer explicitly clicks "Post project".
-    """
     title = payload.get("title") or ""
     description = payload.get("description") or ""
     budget = int(payload.get("budget") or 0)
@@ -265,7 +247,6 @@ def create_project_from_milestones(payload: dict, db: Session = Depends(get_db))
     if not title or not description or budget <= 0 or not milestones_payload:
         raise HTTPException(status_code=400, detail="Invalid project or milestones payload")
 
-    # Normalize milestones to avoid DB errors from missing fields / wrong types
     normalized_milestones = []
     for idx, raw in enumerate(milestones_payload, start=1):
         milestone_id = raw.get("milestone_id") or idx
@@ -327,9 +308,6 @@ def create_project_from_milestones(payload: dict, db: Session = Depends(get_db))
 
 @app.get("/projects")
 def list_projects(db: Session = Depends(get_db)):
-    """
-    Return all projects so freelancers can choose one.
-    """
     projects = db.query(ProjectModel).all()
     return [
         {
@@ -344,9 +322,6 @@ def list_projects(db: Session = Depends(get_db)):
 
 @app.get("/projects/{project_id}/milestones")
 def list_milestones_for_project(project_id: int, db: Session = Depends(get_db)):
-    """
-    Return all milestones for a given project.
-    """
     project = db.query(ProjectModel).filter(ProjectModel.id == project_id).first()
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
@@ -375,11 +350,6 @@ def list_milestones_for_project(project_id: int, db: Session = Depends(get_db)):
 
 @app.post("/ai/generate-milestones")
 def ai_generate_milestones(project: Project):
-    """
-    Ask the Groq-powered AI agent to generate milestones.
-    (Currently returns milestones but does not persist them;
-    the UI focuses on display, not storage, for milestones.)
-    """
     result = generate_milestones(project.description, project.budget)
 
     if result["success"]:
@@ -395,9 +365,6 @@ def ai_generate_milestones(project: Project):
 
 @app.post("/milestone/submit")
 def submit_work(data: Submission, db: Session = Depends(get_db)):
-    """
-    Store a raw milestone submission (before AI evaluation).
-    """
     submission = SubmissionModel(
         project_id=data.project_id,
         milestone_id=data.milestone_id,
@@ -420,11 +387,6 @@ def submit_work(data: Submission, db: Session = Depends(get_db)):
 
 @app.post("/verify/work")
 def verify_work(data: Submission, db: Session = Depends(get_db)):
-    """
-    Verify submitted work using the AI agent and store the evaluation
-    in the database. The response fields are shaped to match the
-    expectations in Frontend/freelancer.html.
-    """
     milestone_row = (
         db.query(MilestoneModel)
         .filter(
@@ -452,7 +414,6 @@ def verify_work(data: Submission, db: Session = Depends(get_db)):
 
     evaluation = result["data"]
 
-    # Upsert submission record
     submission = (
         db.query(SubmissionModel)
         .filter(
@@ -478,7 +439,6 @@ def verify_work(data: Submission, db: Session = Depends(get_db)):
 
     db.commit()
 
-    # Shape response for the frontend
     return {
         "status": evaluation.get("verdict"),
         "quality_score": (evaluation.get("score") or 0) / 100.0,
@@ -490,10 +450,6 @@ def verify_work(data: Submission, db: Session = Depends(get_db)):
 
 @app.post("/pfi/calculate")
 def calculate_pfi_from_history(history: dict):
-    """
-    Calculate a PFI score from an arbitrary freelancer history payload.
-    (Useful for API testing or future integrations.)
-    """
     result = calculate_pfi(history)
 
     if result["success"]:
@@ -504,11 +460,6 @@ def calculate_pfi_from_history(history: dict):
 
 @app.get("/pfi/{freelancer_id}")
 def get_pfi_profile(freelancer_id: str):
-    """
-    Return a PFI profile shaped for Frontend/profile.html.
-    For now this uses a static demo history and lets the AI
-    compute the PFI, then augments the response with history.
-    """
     history = {
         "freelancer_id": freelancer_id,
         "name": "Alex Johnson",
@@ -531,12 +482,10 @@ def get_pfi_profile(freelancer_id: str):
 
     data = result["data"]
 
-    # Augment AI response so the frontend has full context
     data["name"] = history["name"]
     data["history"] = history["milestones"]
     data["total_projects"] = history["total_projects"]
 
-    # Simple derived stats
     completed = len([m for m in history["milestones"] if m["verdict"] == "completed"])
     deadlines_met = len([m for m in history["milestones"] if m["met_deadline"]])
     data["completed"] = completed
